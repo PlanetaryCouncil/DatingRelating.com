@@ -6,7 +6,10 @@ Single people from Instagram, sorted by where they are right now, plus protocols
 - `/relating/` Resentment Dismantlement Protocol, Mars Crew Pairing Protocol, Mars-144
 - `/co-founder-co-lover/` Co-founder & Co-lover
 
-Static site, no build step. Preview locally with `python3 -m http.server`.
+- `/people/<id>/` Personal pages, generated for every profile that has a `"bio"`
+
+Static site. After editing `profiles.json`, run `python3 build.py` to (re)generate the personal pages, then commit.
+Preview locally with `python3 -m http.server`.
 
 Dating is just 1st step, relating is what happens afterwards.
 

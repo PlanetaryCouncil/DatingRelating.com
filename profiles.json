@@ -1,7 +1,18 @@
 [
   {
-    "id": "lucy_guo-los-angeles",
+    "id": "marsitatheultra",
+    "name": "Marsita",
+    "instagram": "marsitatheultra",
+    "post_url": "https://www.instagram.com/p/DULQn4cjMBs/",
+    "city": "London",
+    "country": "United Kingdom",
+    "relocation": true,
+    "added": "2026-10-14"
+  },
+  {
+    "id": "lucy-guo",
     "name": "Lucy Guo",
+    "bio": "She used to be the youngest self-made female billionaire: https://en.wikipedia.org/wiki/Lucy_Guo",
     "x": "lucy_guo",
     "post_url": "https://x.com/lucy_guo/status/1867380981914832968",
     "city": "Los Angeles",
