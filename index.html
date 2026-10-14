@@ -43,19 +43,29 @@
     }
     .link { color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; margin-top: 4px; }
     .link::before { content: ""; position: absolute; inset: 0; } /* whole card clickable */
-    /* Instagram embed cards */
-    .grid.has-embeds { grid-template-columns: repeat(auto-fit, minmax(326px, 380px)); justify-content: center; align-items: start; }
-    @media (max-width: 400px) { .grid.has-embeds { grid-template-columns: 1fr; } }
+    /* Embed cards (Instagram / X) in a masonry layout. CSS columns work everywhere today;
+       browsers that ship native masonry (display: grid-lanes) get proper left-to-right order. */
+    .grid.has-embeds { display: block; columns: 3 326px; column-gap: 18px; max-width: 1180px; margin: 0 auto; }
+    .grid.has-embeds > * { break-inside: avoid; margin-bottom: 18px; }
+    @supports (display: grid-lanes) {
+      .grid.has-embeds { display: grid-lanes; columns: auto; grid-template-columns: repeat(auto-fill, minmax(326px, 1fr)); gap: 18px; }
+      .grid.has-embeds > * { margin-bottom: 0; }
+    }
+    .frame { position: relative; border-radius: 16px; overflow: hidden; background: var(--chip); }
+    .frame iframe { display: block; width: 100%; border: 0; background: transparent; position: relative; }
+    .frame.ig iframe { height: 620px; }
+    .frame.x iframe { height: 420px; }
+    .frame .fallback { position: absolute; inset: auto 0 0 0; }
+    .frame.ready { background: transparent; }
     .ecard {
       background: var(--surface); border: 1px solid var(--line); border-radius: 24px;
       padding: 14px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 8px 30px rgba(0,0,0,.05);
     }
-    .ecard .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; padding: 4px 6px 12px; }
-    .ecard .country { color: var(--muted); opacity: 1; }
-    .ecard .loc { font-size: 28px; }
+    .ecard .head { display: flex; flex-direction: column; gap: 4px; padding: 4px 6px 12px; min-width: 0; }
+    .ecard .loc { font-size: 24px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ecard .date { color: var(--muted); font-size: 13px; }
     .ecard .tag { background: var(--chip); color: var(--text); backdrop-filter: none; white-space: nowrap; }
-    .ecard .instagram-media { margin: 0 !important; min-width: 0 !important; width: 100% !important; border-radius: 16px !important; }
     .ecard .fallback {
       display: block; padding: 28px; border-radius: 16px; background: var(--chip);
       color: var(--accent); font-weight: 600; text-decoration: none; text-align: center;
@@ -118,36 +128,89 @@
     }
 
     const place = (p) => [p.city, p.region].filter(Boolean).join(", ") || p.country || "";
+    // Broad to narrow, on one line: "United States, Utah, Salt Lake City"
+    const fullPlace = (p) => [p.country, p.region, p.city].filter(Boolean).join(", ") || "Location unspecified";
+
+    // Which platform a post_url points at, plus the ID we need to embed it.
+    function source(url = "") {
+      let m = url.match(/instagram\.com\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
+      if (m) return { kind: "ig", code: m[1] };
+      m = url.match(/(?:x|twitter)\.com\/[^/]+\/status\/(\d+)/);
+      if (m) return { kind: "x", id: m[1] };
+      return null;
+    }
+
+    // Both platforms encode the post time in the ID itself.
+    // Instagram: shortcode -> media ID, top bits = ms since 2011-08-24. X: snowflake, top bits = ms since 2010-11-04.
+    const IG_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    function postedAt(p) {
+      if (p.posted) return new Date(p.posted);
+      const s = source(p.post_url);
+      if (s?.kind === "ig") {
+        let id = 0n;
+        for (const ch of s.code.slice(0, 11)) id = id * 64n + BigInt(IG_ALPHABET.indexOf(ch));
+        return new Date(Number(id >> 23n) + 1314220021721);
+      }
+      if (s?.kind === "x") return new Date(Number(BigInt(s.id) >> 22n) + 1288834974657);
+      return null;
+    }
+    const fmtDate = (d) => d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+
+    // Embeds are plain iframes with loading="lazy": nothing from Instagram or X loads until a
+    // card is about to scroll into view, and no embed.js / widgets.js scripts are needed at all.
+    const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+    function frameSrc(s) {
+      return s.kind === "ig"
+        ? `https://www.instagram.com/p/${s.code}/embed/captioned/`
+        : `https://platform.twitter.com/embed/Tweet.html?id=${s.id}&dnt=true&theme=${dark ? "dark" : "light"}`;
+    }
 
     function embedCard(p) {
+      const s = source(p.post_url);
       const c = el("article", { class: "ecard" });
       const head = el("div", { class: "head" });
-      const where = el("div");
-      if (p.country && place(p) !== p.country) where.append(el("div", { class: "country" }, p.country));
-      where.append(el("div", { class: "loc" }, place(p)));
-      head.append(where);
+      const loc = el("div", { class: "loc" }, fullPlace(p));
+      loc.title = fullPlace(p);
+      head.append(loc);
+      const d = postedAt(p);
+      head.append(el("div", { class: "date" }, d ? `Posted ${fmtDate(d)}` : " "));
       c.append(head);
 
-      // Instagram's official embed; embed.js upgrades this blockquote into the live post.
-      const q = el("blockquote", {
-        class: "instagram-media", "data-instgrm-permalink": p.post_url, "data-instgrm-version": "14",
+      const frame = el("div", { class: `frame ${s.kind}` });
+      frame.append(el("a", { class: "fallback", href: p.post_url, target: "_blank", rel: "noopener" },
+        s.kind === "ig" ? "View on Instagram →" : "View on X →"));
+      const f = el("iframe", {
+        src: frameSrc(s), loading: "lazy", title: s.kind === "ig" ? "Instagram post" : "Post on X",
+        scrolling: "no", referrerpolicy: "strict-origin-when-cross-origin",
       });
-      const handle = p.instagram && p.instagram.replace(/^@/, "");
-      q.append(el("a", { class: "fallback", href: p.post_url, target: "_blank", rel: "noopener" },
-        handle ? `View @${handle} on Instagram →` : "View post on Instagram →"));
-      c.append(q);
+      // X sometimes never sends its size on the first load; reload the frame once if so.
+      let retried = false;
+      f.addEventListener("load", () => setTimeout(() => {
+        if (!frame.classList.contains("ready") && !retried) { retried = true; f.src = f.src; }
+      }, 5000));
+      frame.append(f);
+      c.append(frame);
       return c;
     }
 
-    function loadEmbeds() {
-      if (window.instgrm) return window.instgrm.Embeds.process();
-      if (document.getElementById("ig-embed")) return;
-      const s = el("script", { id: "ig-embed", src: "https://www.instagram.com/embed.js", async: "" });
-      document.body.append(s);
-    }
+    // Both embeds report their real height via postMessage; size each iframe to fit.
+    addEventListener("message", (e) => {
+      let host;
+      try { host = new URL(e.origin).hostname; } catch { return; }
+      if (!/(^|\.)instagram\.com$|^platform\.twitter\.com$/.test(host)) return;
+      let msg = e.data, h;
+      try { if (typeof msg === "string") msg = JSON.parse(msg); } catch { return; }
+      if (msg?.type === "MEASURE") h = msg.details?.height;
+      const x = msg?.["twttr.embed"];
+      if (x?.method === "twttr.private.resize") h = x.params?.[0]?.height;
+      if (!h) return;
+      for (const f of document.querySelectorAll(".frame iframe")) {
+        if (f.contentWindow === e.source) { f.style.height = `${Math.ceil(h)}px`; f.parentElement.classList.add("ready"); }
+      }
+    });
 
     function card(p) {
-      if (p.embed && p.post_url) return embedCard(p);
+      if (source(p.post_url) && p.embed !== false) return embedCard(p);
       const c = el("article", { class: "card" });
       if (p.image) {
         c.append(el("img", { src: p.image, alt: p.name || "Photo", loading: "lazy" }));
@@ -175,16 +238,16 @@
 
     function render(list) {
       $("grid").replaceChildren(...list.map(card));
-      $("grid").classList.toggle("has-embeds", list.some((p) => p.embed));
-      if (list.some((p) => p.embed)) loadEmbeds();
+      $("grid").classList.toggle("has-embeds", list.some((p) => source(p.post_url)));
       $("empty").hidden = list.length > 0;
     }
 
     fetch("profiles.json", { cache: "no-cache" })
       .then((r) => r.json())
       .then((data) => {
-        // Newest first
-        render(data.sort((a, b) => (b.added || "").localeCompare(a.added || "")));
+        // Newest post first
+        const t = (p) => postedAt(p)?.getTime() || 0;
+        render(data.sort((a, b) => t(b) - t(a)));
       })
       .catch(() => { $("empty").hidden = false; $("empty").textContent = "Could not load profiles."; });
   </script>
