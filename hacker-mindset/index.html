@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hacker Mindset · DatingRelating.com</title>
+  <meta name="description" content="Choose happiness. The goal is to create a happy relationship, not to litigate a breach of terms and conditions a few years from now.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .quote {
+      margin: 0; padding: 0; max-width: 900px;
+      font-family: "Instrument Serif", Georgia, serif; font-size: clamp(28px, 4.4vw, 48px); line-height: 1.12;
+    }
+    .quote::before { content: "“"; color: var(--accent); }
+    .quote::after { content: "”"; color: var(--accent); }
+
+    .hacker { display: grid; grid-template-columns: 380px 1fr; gap: 48px; align-items: start; margin-top: 72px; }
+    @media (max-width: 860px) { .hacker { grid-template-columns: 1fr; gap: 28px; } .rabbit { max-width: 420px; } }
+    .rabbit { position: sticky; top: 20px; }
+    @media (max-width: 860px) { .rabbit { position: static; } }
+    .rabbit img { border-radius: 28px; box-shadow: 0 30px 60px rgba(40, 20, 90, .25); }
+    .hacks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+    .hacks li { display: grid; grid-template-columns: 52px 1fr; gap: 16px; padding: 20px 22px; }
+    .hn { font-family: "Instrument Serif", Georgia, serif; font-size: 36px; line-height: 1; color: var(--accent); }
+    .hacks h3 { margin: 0 0 6px; font-size: 18px; }
+    .hacks p { margin: 0; color: var(--muted); }
+    .row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <div class="blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="/">Dating<b>Relating</b></a>
+      <div class="navlinks">
+        <a href="/">Dating</a>
+        <a href="/relating/">Relating</a>
+        <a href="/hacker-mindset/" aria-current="page">Hacker Mindset</a>
+        <a href="/co-founder-co-lover/">Co-founder &amp; Co-lover</a>
+      </div>
+    </nav>
+
+    <header>
+      <p class="eyebrow">Our approach</p>
+      <h1>Choose <em>happiness</em>.</h1>
+      <p class="lede" style="max-width: 760px">
+        <span class="quote">The goal is to create a happy relationship, as opposed to litigating a breach of terms and conditions a few years from now.</span>
+      </p>
+    </header>
+
+    <section class="hacker">
+      <figure class="figure rabbit">
+        <img src="/media/hacker-rabbit.jpg" width="1024" height="1024"
+             alt="Rabbit in neon goggles holding a sunflower and a 'Maybe looking' sign">
+      </figure>
+      <div>
+        <h2 class="section-title">Hacker mindset</h2>
+        <ol class="hacks">
+          <li class="panel">
+            <span class="hn">01</span>
+            <div>
+              <h3>No waste in nature</h3>
+              <p>Over the years, many dating websites went out of business. Acquire the database, in accordance with the terms and conditions updated in the bankruptcy proceedings. Those users might still be looking, and we are doing them (and you) a service.</p>
+            </div>
+          </li>
+          <li class="panel">
+            <span class="hn">02</span>
+            <div>
+              <h3>Insider access</h3>
+              <p>Premium access? How about insider access? Someone needs to be shown first to the new users anyway. Another win-win-win for everyone involved.</p>
+            </div>
+          </li>
+          <li class="panel">
+            <span class="hn">03</span>
+            <div>
+              <h3>Social media as dating infrastructure</h3>
+              <p>A tactful, respectful, professional intro message. A tiny bit of small talk to show cultural awareness. Then a direct compliment and sorting out logistics. A genuine, honest, refreshing approach that adds value and boosts confidence.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="join">
+      <h2>Got a hack of your own?</h2>
+      <p>Share it. The best ones end up on this page.</p>
+      <div class="row">
+        <a class="btn" href="mailto:datingrelatingdotcom@gmail.com?subject=Hacker%20mindset">Email us</a>
+        <a class="btn ghost" href="/">Back to dating</a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

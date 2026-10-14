@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Co-founder &amp; Co-lover · DatingRelating.com</title>
+  <meta name="description" content="The Apprentice meets Love Island meets Y Combinator. Where startups get built, soulmates get found, and legends get born.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .hero {
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center;
+      padding: 40px 0 24px;
+    }
+    @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } }
+    .mashup { font-family: Oswald, Inter, sans-serif; font-style: italic; text-transform: uppercase; letter-spacing: .02em; font-size: 18px; margin: 0 0 18px; }
+    .mashup span { color: var(--muted); font-weight: 400; text-transform: lowercase; }
+    .big {
+      font-family: Oswald, Inter, sans-serif; font-weight: 700; text-transform: uppercase;
+      font-size: clamp(44px, 7.5vw, 100px); line-height: .95; letter-spacing: -0.01em; margin: 0;
+    }
+    .big em {
+      font-style: normal;
+      background: linear-gradient(90deg, #d31f2c, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .tagline { list-style: none; padding: 0; margin: 28px 0 32px; display: grid; gap: 6px; }
+    .tagline li { font-family: "Instrument Serif", Georgia, serif; font-size: clamp(24px, 3.4vw, 34px); line-height: 1.1; }
+    .tagline li:nth-child(2) { padding-left: 1.2em; }
+    .tagline li:nth-child(3) { padding-left: 2.4em; }
+    .poster img { box-shadow: 0 30px 60px rgba(120, 10, 20, .25); }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+
+    .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 80px; }
+    .pillars .panel { padding: 24px; }
+    .pillars .k { font-family: Oswald, Inter, sans-serif; text-transform: uppercase; font-size: 13px; letter-spacing: .1em; color: var(--accent); }
+    .pillars h3 { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: 30px; margin: 6px 0 8px; line-height: 1; }
+    .pillars p { margin: 0; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="/">Dating<b>Relating</b></a>
+      <div class="navlinks">
+        <a href="/">Dating</a>
+        <a href="/relating/">Relating</a>
+        <a href="/hacker-mindset/">Hacker Mindset</a>
+        <a href="/co-founder-co-lover/" aria-current="page">Co-founder &amp; Co-lover</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <p class="mashup">The Apprentice <span>meets</span> Love Island <span>meets</span> Y Combinator</p>
+        <h1 class="big">Co&#8209;founder<br><em>&amp;&nbsp;Co&#8209;lover</em></h1>
+        <ul class="tagline">
+          <li>Where startups get built,</li>
+          <li>soulmates get found,</li>
+          <li>and legends get born.</li>
+        </ul>
+        <div class="row">
+          <a class="btn" href="mailto:datingrelatingdotcom@gmail.com?subject=Co-founder%20%26%20Co-lover">Register interest</a>
+          <a class="btn ghost" href="/relating/">Read the protocols</a>
+        </div>
+      </div>
+      <figure class="figure poster">
+        <img src="/media/co-founder-co-lover.webp" width="945" height="1200"
+             alt="Co-founder & Co-lover poster: four people in a red-tinted office around a laptop">
+      </figure>
+    </section>
+
+    <div class="pillars">
+      <div class="panel"><div class="k">The Apprentice</div><h3>Build</h3><p>Ship something real, under pressure, in public.</p></div>
+      <div class="panel"><div class="k">Love Island</div><h3>Connect</h3><p>Chemistry is part of the game, not a distraction from it.</p></div>
+      <div class="panel"><div class="k">Y Combinator</div><h3>Launch</h3><p>Pitch it, fund it, take it to the world. Together.</p></div>
+    </div>
+
+    <section class="join">
+      <h2>Founder, single, and up for it?</h2>
+      <p>Tell us what you are building, where you are, and who you are looking for.</p>
+      <div class="row" style="justify-content:center">
+        <a class="btn" href="mailto:datingrelatingdotcom@gmail.com?subject=Co-founder%20%26%20Co-lover">Email us</a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

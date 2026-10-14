@@ -1,4 +1,12 @@
-Basic placeholder website for DatingRelating.com
+# DatingRelating.com
+
+Single people from Instagram, sorted by where they are right now, plus protocols for the relating part.
+
+- `/` Dating: profiles from `profiles.json` (see `profiles/README.md` to add one)
+- `/relating/` Resentment Dismantlement Protocol, Mars Crew Pairing Protocol, Mars-144
+- `/co-founder-co-lover/` Co-founder & Co-lover
+
+Static site, no build step. Preview locally with `python3 -m http.server`.
 
 Dating is just 1st step, relating is what happens afterwards.
 
@@ -12,45 +20,3 @@ Related to 42: https://github.com/marsrobertson/one-life-true-self/issues/42 Fro
 > Decent connection with my body, clearly above the average. Enjoys flirting (you've been warned) with fit / strong / athletic ladies, sweat is sexy. At least 1 pull-up as a bar of entry to my club 💪
 > Sensual consensual sapiosexual - attracted to intelligence and loads of other things, not necessarily nudity, tease my 🧠 please.
 > You can also share your business secrets with me, what happens in bed stays in bed.
-
-
-----
-
-
-Story by HTML5 UP
-html5up.net | @ajlkn
-Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-
-
-Say hello to Story, a brand new responsive one-pager for HTML5 UP! Inspired by my work
-on Carrd*, Story is built to be extremely modular and tweakable, and as such is entirely
-built on reusable, insanely customizable elements (like "spotlight" and "gallery") that
-can be endlessly duplicated and tweaked into whatever you need to tell your story --
-without, in many cases, touching *any* CSS. Check out index-demo.html for an interactive
-demo, and index.html for the actual template. Enjoy!
-
-Demo images** courtesy of Unsplash, a radtastic collection of CC0 (public domain) images
-you can use for pretty much whatever.
-
-PS: Delete index-demo.html and assets/js/demo.js when you're done messing with the demo
-as neither are needed in production :)
-
-(* = my other side project -- carrd.co)
-(** = not included)
-
-AJ
-aj@lkn.io | @ajlkn
-
-
-Credits:
-
-	Demo Images:
-		Unsplash (unsplash.com)
-
-	Icons:
-		Font Awesome (fontawesome.io)
-
-	Other:
-		jQuery (jquery.com)
-		Scrollex (github.com/ajlkn/jquery.scrollex)
-		Responsive Tools (github.com/ajlkn/responsive-tools)

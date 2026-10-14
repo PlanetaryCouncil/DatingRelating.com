@@ -2,108 +2,194 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>datingrelating.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DatingRelating.com</title>
+  <meta name="description" content="Real people from Instagram. Playing WIN WIN WIN games. Aligned vibes, attraction, lifestyle and geography matter.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
   <style>
-    body {
-      background-color: #000;
-      color: #0f0;
-      font-family: monospace;
-      padding: 40px;
-      max-width: 700px;
-      margin: auto;
-      line-height: 1.7;
-      font-size: 16px;
+    .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+    .card {
+      position: relative; aspect-ratio: 3 / 4; border-radius: 24px; overflow: hidden;
+      background: linear-gradient(135deg, var(--blob-1), var(--blob-3));
+      color: #fff; isolation: isolate;
+      transition: transform .25s ease, box-shadow .25s ease;
     }
-
-    h1, h2 {
-      color: #fff;
+    .card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.14); }
+    .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .5s ease; }
+    .card:hover img { transform: scale(1.04); }
+    .initial {
+      position: absolute; inset: 0; display: grid; place-items: center; z-index: -2;
+      font-family: "Instrument Serif", Georgia, serif; font-size: 120px; color: rgba(255,255,255,.75);
     }
-
-    .email a {
-      color: #ff0;
-      text-decoration: none;
+    .card::after {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.25) 45%, transparent 70%);
     }
-
-    .section {
-      margin-top: 2rem;
+    .top { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      background: rgba(0,0,0,.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-radius: 999px; padding: 4px 11px; font-size: 12px; font-weight: 500;
     }
-
-    .quote {
-      font-style: italic;
-      color: #888;
+    .tag.ex { background: var(--accent); }
+    .bottom { position: absolute; left: 18px; right: 18px; bottom: 18px; display: flex; flex-direction: column; gap: 6px; }
+    .loc { font-family: "Instrument Serif", Georgia, serif; font-size: 30px; line-height: 1; }
+    .country { font-size: 13px; opacity: .8; text-transform: uppercase; letter-spacing: .08em; }
+    .text {
+      margin: 4px 0 0; font-size: 14px; opacity: .9;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
     }
-
-    .cta {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 2rem;
+    .link { color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; margin-top: 4px; }
+    .link::before { content: ""; position: absolute; inset: 0; } /* whole card clickable */
+    /* Instagram embed cards */
+    .grid.has-embeds { grid-template-columns: repeat(auto-fit, minmax(326px, 380px)); justify-content: center; align-items: start; }
+    @media (max-width: 400px) { .grid.has-embeds { grid-template-columns: 1fr; } }
+    .ecard {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 24px;
+      padding: 14px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 30px rgba(0,0,0,.05);
     }
-
-    .cta a {
-      background-color: #00ff88;
-      color: #000;
-      text-decoration: none;
-      padding: 1rem;
-      border-radius: 8px;
-      font-weight: bold;
-      text-align: center;
-      transition: 0.2s ease;
+    .ecard .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; padding: 4px 6px 12px; }
+    .ecard .country { color: var(--muted); opacity: 1; }
+    .ecard .loc { font-size: 28px; }
+    .ecard .tag { background: var(--chip); color: var(--text); backdrop-filter: none; white-space: nowrap; }
+    .ecard .instagram-media { margin: 0 !important; min-width: 0 !important; width: 100% !important; border-radius: 16px !important; }
+    .ecard .fallback {
+      display: block; padding: 28px; border-radius: 16px; background: var(--chip);
+      color: var(--accent); font-weight: 600; text-decoration: none; text-align: center;
     }
-
-    .cta a:hover {
-      background-color: #00cc66;
-    }
+    .empty { color: var(--muted); padding: 60px 0; text-align: center; }
+    .empty a { color: var(--accent); }
 
   </style>
 </head>
 <body>
+  <div class="blobs" aria-hidden="true"><span></span><span></span><span></span></div>
 
-  <h1>datingrelating.com</h1>
-  <p class="email"><a href="mailto:datingrelatingdotcom@gmail.com">💌 datingrelatingdotcom@gmail.com</a></p>
-  <p class="email"><a href="https://forms.gle/rbfYdft5UNeTBtfE7" target="_blank">📝 Fill the Form</a></p>
-  <p class="email"><a href="https://calendly.com/marsxr/basex" target="_blank">📅 Book a Call</a></p>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="/">Dating<b>Relating</b></a>
+      <div class="navlinks">
+        <a href="/" aria-current="page">Dating</a>
+        <a href="/relating/">Relating</a>
+        <a href="/hacker-mindset/">Hacker Mindset</a>
+        <a href="/co-founder-co-lover/">Co-founder &amp; Co-lover</a>
+        <a class="btn" href="#join">Get listed</a>
+      </div>
+    </nav>
 
-  <div class="section">
-    <h2>Hacker Mindset #1</h2>
-    <p>Throughout the years, many dating websites went out of business. Acquire the database, in accordance with the terms and conditions updated in the bankruptcy proceedings. No waste in nature. These users might be still looking and we are doing them (and you) a service.</p>
-  </div>
+    <header>
+      <h1>Single, and <em>somewhere</em> in the world.</h1>
+      <p class="lede">
+        Real people from Instagram. Playing WIN WIN WIN games.
+        Aligned vibes / attraction / lifestyle / geography matters.
+        Let's see what's on the menu...
+      </p>
+    </header>
 
-  <div class="section">
-    <h2>Hacker Mindset #2</h2>
-    <p>Premium access? How about insider access? Someone needs to be shown first to the new users anyway. This is another WIN WIN WIN for everyone involved.</p>
-  </div>
+    <main class="grid" id="grid"></main>
+    <p class="empty" id="empty" hidden>No one here yet. <a href="#join">Be the first</a>.</p>
 
-  <div class="section">
-    <h2>Hacker Mindset #3</h2>
-    <p>Social media as dating infrastructure. Tactful respectable professional intro message, tiny bit of small talk to show cultural awareness, then direct compliment and establishing logistics. Genuine honest refreshing approach, also adding value and boosting confidence.</p>
-  </div>
+    <section class="join" id="join">
+      <h2>Want to be on the wall?</h2>
+      <p>Send your Instagram post, your current city and who you are looking for.</p>
+      <div class="row">
+        <a class="btn" href="mailto:datingrelatingdotcom@gmail.com">Email us</a>
+        <a class="btn ghost" href="https://github.com/PlanetaryCouncil/DatingRelating.com/blob/main/profiles.json" target="_blank" rel="noopener">Open a pull request</a>
+      </div>
+    </section>
 
-  <!-- <div class="section">
-    <h2>They say:</h2>
-    <p class="quote">"It’s a numbers game."</p>
-
-    <h2>We say:</h2>
-    <p>AI hacker mindset 🐇<br>
-    Love as a science.<br>
-    Science of love.<br>
+    <p class="fine">
+      Listed and want to be taken down, or moved city?
+      <a href="mailto:datingrelatingdotcom@gmail.com">Email us</a> and it is done the same day.
     </p>
-
-    <p>And once the dating starts... <strong>The "relating" part of datingrelating.com</strong>. Because you don’t want to make all the mistakes alone.</p>
-
-    <p>Dating. Relating.<br>
-      All of the above...</p>
-  </div> -->
-
-  <div class="section cta">
-    <a href="mailto:datingrelatingdotcom@gmail.com">💌 Send an Email</a>
-    <a href="https://forms.gle/rbfYdft5UNeTBtfE7" target="_blank">📝 Fill the Form</a>
-    <a href="https://calendly.com/marsxr/basex" target="_blank">📅 Book a Call</a>
   </div>
 
-  <br>
+  <script>
+    const seekingLabel = { woman: "Looking for a woman", man: "Looking for a man" };
+    const $ = (id) => document.getElementById(id);
 
-  <img src="datingrelating.jpg" style="max-width: 100%;"/>
+    function el(tag, attrs = {}, text) {
+      const n = document.createElement(tag);
+      for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+      if (text != null) n.textContent = text;
+      return n;
+    }
 
+    const place = (p) => [p.city, p.region].filter(Boolean).join(", ") || p.country || "";
+
+    function embedCard(p) {
+      const c = el("article", { class: "ecard" });
+      const head = el("div", { class: "head" });
+      const where = el("div");
+      if (p.country && place(p) !== p.country) where.append(el("div", { class: "country" }, p.country));
+      where.append(el("div", { class: "loc" }, place(p)));
+      head.append(where);
+      if (p.seeking) head.append(el("span", { class: "tag" }, seekingLabel[p.seeking] || p.seeking));
+      c.append(head);
+
+      // Instagram's official embed; embed.js upgrades this blockquote into the live post.
+      const q = el("blockquote", {
+        class: "instagram-media", "data-instgrm-permalink": p.post_url, "data-instgrm-version": "14",
+      });
+      const handle = p.instagram && p.instagram.replace(/^@/, "");
+      q.append(el("a", { class: "fallback", href: p.post_url, target: "_blank", rel: "noopener" },
+        handle ? `View @${handle} on Instagram →` : "View post on Instagram →"));
+      c.append(q);
+      return c;
+    }
+
+    function loadEmbeds() {
+      if (window.instgrm) return window.instgrm.Embeds.process();
+      if (document.getElementById("ig-embed")) return;
+      const s = el("script", { id: "ig-embed", src: "https://www.instagram.com/embed.js", async: "" });
+      document.body.append(s);
+    }
+
+    function card(p) {
+      if (p.embed && p.post_url) return embedCard(p);
+      const c = el("article", { class: "card" });
+      if (p.image) {
+        c.append(el("img", { src: p.image, alt: p.name || "Photo", loading: "lazy" }));
+      } else {
+        c.append(el("div", { class: "initial", "aria-hidden": "true" }, (p.name || "?").trim().charAt(0).toUpperCase()));
+      }
+
+      const top = el("div", { class: "top" });
+      if (p.seeking) top.append(el("span", { class: "tag" }, seekingLabel[p.seeking] || p.seeking));
+      if (p.example) top.append(el("span", { class: "tag ex" }, "Example"));
+      c.append(top);
+
+      const b = el("div", { class: "bottom" });
+      if (p.country) b.append(el("div", { class: "country" }, p.country));
+      b.append(el("div", { class: "loc" }, p.city || p.country || ""));
+      if (p.text) b.append(el("p", { class: "text" }, p.text));
+      const handle = p.instagram && p.instagram.replace(/^@/, "");
+      const href = p.post_url || (handle && `https://instagram.com/${handle}`);
+      if (href) {
+        b.append(el("a", { class: "link", href, target: "_blank", rel: "noopener" },
+          handle ? `@${handle} →` : "View post →"));
+      }
+      c.append(b);
+      return c;
+    }
+
+    function render(list) {
+      $("grid").replaceChildren(...list.map(card));
+      $("grid").classList.toggle("has-embeds", list.some((p) => p.embed));
+      if (list.some((p) => p.embed)) loadEmbeds();
+      $("empty").hidden = list.length > 0;
+    }
+
+    fetch("profiles.json", { cache: "no-cache" })
+      .then((r) => r.json())
+      .then((data) => {
+        // Newest first
+        render(data.sort((a, b) => (b.added || "").localeCompare(a.added || "")));
+      })
+      .catch(() => { $("empty").hidden = false; $("empty").textContent = "Could not load profiles."; });
+  </script>
 </body>
 </html>
