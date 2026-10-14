@@ -56,7 +56,20 @@
       padding: 14px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 8px 30px rgba(0,0,0,.05);
     }
-    .ecard .head { display: flex; flex-direction: column; gap: 4px; padding: 4px 6px 12px; min-width: 0; }
+    .ecard .head {
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; row-gap: 4px;
+      align-items: center; padding: 4px 6px 12px;
+    }
+    .ecard .head .date { grid-column: 1 / -1; }
+    .permalink {
+      font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none;
+      min-width: 32px; height: 28px; padding: 0 10px; border-radius: 999px;
+      display: inline-grid; place-items: center; background: var(--chip);
+      transition: color .15s ease, background .15s ease;
+    }
+    .permalink:hover { color: var(--text); }
+    .permalink.done { color: #fff; background: var(--accent); }
+    .ecard { scroll-margin-top: 16px; }
     .ecard .loc { font-size: 24px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .ecard .date { color: var(--muted); font-size: 13px; }
     .ecard .tag { background: var(--chip); color: var(--text); backdrop-filter: none; white-space: nowrap; }
@@ -91,9 +104,10 @@
     <header>
       <h1>Possibly single, and <em>somewhere</em> in the world.</h1>
       <p class="lede">
-        Real people from Instagram. Playing WIN WIN WIN games.
-        Aligned vibes / attraction / lifestyle / geography matters.
-        Let's see what's on the menu...
+        Real people, real posts.<br>
+        Playing WIN-WIN-WIN games.<br>
+        Aligned vibes, attraction, lifestyle and geography help a lot.<br>
+        Let's see what's on the menu&hellip;
       </p>
     </header>
 
@@ -140,11 +154,11 @@
     }
 
     function embedCard(p) {
-      const c = el("article", { class: "ecard" });
+      const c = el("article", { class: "ecard", id: p.id });
       const head = el("div", { class: "head" });
       const loc = el("div", { class: "loc" }, fullPlace(p));
       loc.title = fullPlace(p);
-      head.append(loc);
+      head.append(loc, permalink(p));
       const d = postedAt(p);
       const when = [d && `Posted ${fmtDate(d)}`, p.relocation && "Relocation friendly"].filter(Boolean).join(" · ");
       head.append(el("div", { class: "date" }, when ||" "));
@@ -154,6 +168,20 @@
       const more = personUrl(p);
       if (more) c.append(el("a", { class: "more", href: more }, "Read more →"));
       return c;
+    }
+
+    // "#" in the tile's top-right corner: copies a link that opens the page with this person first.
+    function permalink(p) {
+      const a = el("a", { class: "permalink", href: `#${p.id}`, title: "Copy link to this profile", "aria-label": "Copy link to this profile" }, "#");
+      a.addEventListener("click", async (e) => {
+        e.preventDefault();
+        history.replaceState(null, "", `#${p.id}`);
+        try { await navigator.clipboard.writeText(location.href); a.textContent = "Copied"; }
+        catch { a.textContent = "Link set"; }
+        a.classList.add("done");
+        setTimeout(() => { a.textContent = "#"; a.classList.remove("done"); }, 1600);
+      });
+      return a;
     }
 
     function card(p) {
@@ -194,8 +222,16 @@
       .then((data) => {
         // Random order per visitor, but stable across reloads: each profile's rank is a hash of
         // (visitor seed + profile id). New profiles slot in without reshuffling everyone else.
+        // A shared link (#id) puts that person first; "pinned" profiles come next.
         const rank = (p) => hash(`${visitorSeed()}:${p.id}`);
-        render(data.sort((a, b) => rank(a) - rank(b)));
+        const order = (list) => {
+          const target = decodeURIComponent(location.hash.slice(1));
+          const tier = (p) => (p.id === target ? 0 : p.pinned ? 1 : 2);
+          return list.slice().sort((a, b) => tier(a) - tier(b) || rank(a) - rank(b));
+        };
+        render(order(data));
+        if (location.hash) $("grid").firstElementChild?.scrollIntoView({ block: "start" });
+        addEventListener("hashchange", () => render(order(data)));
       })
       .catch(() => { $("empty").hidden = false; $("empty").textContent = "Could not load profiles."; });
   </script>
