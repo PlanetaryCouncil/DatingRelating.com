@@ -81,7 +81,7 @@
     </nav>
 
     <header>
-      <h1>Single, and <em>somewhere</em> in the world.</h1>
+      <h1>Possibly single, and <em>somewhere</em> in the world.</h1>
       <p class="lede">
         Real people from Instagram. Playing WIN WIN WIN games.
         Aligned vibes / attraction / lifestyle / geography matters.
@@ -108,7 +108,6 @@
   </div>
 
   <script>
-    const seekingLabel = { woman: "Looking for a woman", man: "Looking for a man" };
     const $ = (id) => document.getElementById(id);
 
     function el(tag, attrs = {}, text) {
@@ -127,7 +126,6 @@
       if (p.country && place(p) !== p.country) where.append(el("div", { class: "country" }, p.country));
       where.append(el("div", { class: "loc" }, place(p)));
       head.append(where);
-      if (p.seeking) head.append(el("span", { class: "tag" }, seekingLabel[p.seeking] || p.seeking));
       c.append(head);
 
       // Instagram's official embed; embed.js upgrades this blockquote into the live post.
@@ -158,7 +156,6 @@
       }
 
       const top = el("div", { class: "top" });
-      if (p.seeking) top.append(el("span", { class: "tag" }, seekingLabel[p.seeking] || p.seeking));
       if (p.example) top.append(el("span", { class: "tag ex" }, "Example"));
       c.append(top);
 
