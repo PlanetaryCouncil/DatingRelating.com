@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About · DatingRelating.com</title>
+  <meta name="description" content="Why DatingRelating.com exists, how it is built, and what ULTRA means.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .ultra {
+      margin: 8px 0 0; padding: 40px 36px; border-radius: 28px; color: #fff;
+      background: linear-gradient(120deg, #17141a 0%, #3b1530 55%, #c2410c 120%);
+    }
+    .ultra .eyebrow { color: #ff9a5a; }
+    .ultra h2 { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: clamp(36px, 6vw, 64px); line-height: 1; margin: 0 0 18px; }
+    .ultra p { font-size: clamp(18px, 2.2vw, 22px); max-width: 720px; margin: 0 0 12px; opacity: .92; }
+    .ultra strong { color: #ff9a5a; font-weight: 600; }
+
+    .hope {
+      margin: 64px 0 0; max-width: 860px;
+      font-family: "Instrument Serif", Georgia, serif; font-size: clamp(28px, 4vw, 44px); line-height: 1.15;
+    }
+    .hope::before { content: "“"; color: var(--accent); }
+    .hope::after { content: "”"; color: var(--accent); }
+
+    .choices { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 24px; }
+    .choice { padding: 22px; }
+    .choice h3 { margin: 0 0 6px; font-size: 17px; }
+    .choice p { margin: 0; color: var(--muted); }
+    .choice a { color: var(--accent); }
+    section.block { margin-top: 96px; }
+  </style>
+</head>
+<body>
+  <div class="blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="/">Dating<b>Relating</b></a>
+      <div class="navlinks">
+        <a href="/">Dating</a>
+        <a href="/relating/">Relating</a>
+        <a href="/hacker-mindset/">Hacker Mindset</a>
+        <a href="/co-founder-co-lover/">Co-founder &amp; Co-lover</a>
+        <a href="/about/" aria-current="page">About</a>
+      </div>
+    </nav>
+
+    <header>
+      <p class="eyebrow">About</p>
+      <h1>Dating is step one. <em>Relating</em> is the rest.</h1>
+      <p class="lede">
+        A small board of people who are possibly single, sorted by where they are,
+        plus protocols for what comes after the first date.
+      </p>
+    </header>
+
+    <section class="ultra">
+      <p class="eyebrow">A reflection</p>
+      <h2>Not everyone is ULTRA.</h2>
+      <p>What is ULTRA? When <strong>10 / 10 is not good enough</strong> and you are world class in multiple categories.</p>
+    </section>
+
+    <p class="hope">Hope this project will do more good than harm, and motivate people to level up their game.</p>
+
+    <section class="block">
+      <p class="eyebrow">How it is built</p>
+      <h2 class="section-title">Design choices</h2>
+      <div class="choices">
+        <div class="panel choice">
+          <h3>Posts stay where they were posted</h3>
+          <p>Every tile is the original Instagram or X post, shown with the platform's own embed. No copies of anyone's photos are stored here. If a post is deleted or embedding is switched off, it disappears from this site too.</p>
+        </div>
+        <div class="panel choice">
+          <h3>Location first</h3>
+          <p>Moving countries is hard right now, so every tile leads with where the person is: country, region, city. "Relocation friendly" when they are open to moving.</p>
+        </div>
+        <div class="panel choice">
+          <h3>Fair, stable order</h3>
+          <p>Each visitor gets their own random order, so nobody is always on top. It stays the same across visits (a seed kept in your browser only, never sent anywhere). New people slot in without reshuffling everyone else.</p>
+        </div>
+        <div class="panel choice">
+          <h3>Deep links</h3>
+          <p>The # in the corner of each tile copies a link that opens the page with that person first. Some profiles are not in the public list and are reachable only through a direct link.</p>
+        </div>
+        <div class="panel choice">
+          <h3>Personal pages that grow</h3>
+          <p>Anyone can have a page at /people/name/ with a bio that builds up over time. Tiles only show "Read more" when there is more to read.</p>
+        </div>
+        <div class="panel choice">
+          <h3>Light on third parties</h3>
+          <p>No tracking scripts. Embeds only load when they are about to scroll into view, and X embeds ask not to track visitors. Plain HTML, no build step, hosted on GitHub Pages.</p>
+        </div>
+        <div class="panel choice">
+          <h3>Taken down the same day</h3>
+          <p>Listed and want to be removed, or moved city? <a href="mailto:datingrelatingdotcom@gmail.com">Email us</a> and it is done the same day.</p>
+        </div>
+        <div class="panel choice">
+          <h3>Open source</h3>
+          <p>Everything, including the list of profiles, is public on <a href="https://github.com/PlanetaryCouncil/DatingRelating.com" target="_blank" rel="noopener">GitHub</a>. Pull requests welcome.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="join">
+      <h2>Level up, then get listed.</h2>
+      <p>Send your post, where you are, and who you are looking for.</p>
+      <div class="row">
+        <a class="btn" href="mailto:datingrelatingdotcom@gmail.com">Email us</a>
+        <a class="btn ghost" href="/">See everyone</a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

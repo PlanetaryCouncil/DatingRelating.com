@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 64" width="300" height="64" role="img" aria-label="OF creator">
+  <defs>
+    <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3cc4ff"/>
+      <stop offset="1" stop-color="#009ef0"/>
+    </linearGradient>
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- pill -->
+  <rect x="1.5" y="1.5" width="297" height="61" rx="30.5" fill="url(#fill)" stroke="#0a8fe0" stroke-width="3"/>
+  <!-- top gloss -->
+  <rect x="14" y="6" width="272" height="22" rx="11" fill="url(#gloss)"/>
+  <!-- mark: ring + swoosh -->
+  <g transform="translate(26 14)">
+    <circle cx="18" cy="18" r="13.5" fill="none" stroke="#fff" stroke-width="8.5"/>
+    <path d="M24 31 C30 22, 36 12, 52 4 C49 15, 42 22, 30 22 C36 24, 42 22, 46 20 C40 30, 32 34, 24 31 Z" fill="#fff"/>
+  </g>
+  <!-- label -->
+  <text x="92" y="43" fill="#fff" font-family="Inter, 'Segoe UI', system-ui, -apple-system, sans-serif"
+        font-size="30" font-weight="800" letter-spacing="-0.5">OF creator</text>
+</svg>

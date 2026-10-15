@@ -73,6 +73,13 @@
     .ecard .loc { font-size: 24px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .ecard .date { color: var(--muted); font-size: 13px; }
     .ecard .tag { background: var(--chip); color: var(--text); backdrop-filter: none; white-space: nowrap; }
+    .ecard .notice {
+      display: flex; flex-direction: column; gap: 2px; margin: -2px -2px 14px; padding: 16px 18px;
+      border-radius: 16px; color: #fff; background: linear-gradient(120deg, #ea580c, #f97316);
+      box-shadow: 0 8px 24px rgba(234, 88, 12, .3);
+    }
+    .ecard .notice strong { font-size: 18px; letter-spacing: -0.01em; }
+    .ecard .notice span { font-size: 14px; opacity: .92; }
     .ecard .more {
       display: block; margin: 12px 6px 2px; color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: none;
     }
@@ -97,6 +104,7 @@
         <a href="/relating/">Relating</a>
         <a href="/hacker-mindset/">Hacker Mindset</a>
         <a href="/co-founder-co-lover/">Co-founder &amp; Co-lover</a>
+        <a href="/about/">About</a>
         <a class="btn" href="#join">Get listed</a>
       </div>
     </nav>
@@ -155,6 +163,11 @@
 
     function embedCard(p) {
       const c = el("article", { class: "ecard", id: p.id });
+      if (p.hidden) {
+        const notice = el("div", { class: "notice", role: "status" });
+        notice.append(el("strong", {}, "Not publicly visible"), el("span", {}, "Waiting for approval"));
+        c.append(notice);
+      }
       const head = el("div", { class: "head" });
       const loc = el("div", { class: "loc" }, fullPlace(p));
       loc.title = fullPlace(p);
@@ -227,7 +240,9 @@
         const order = (list) => {
           const target = decodeURIComponent(location.hash.slice(1));
           const tier = (p) => (p.id === target ? 0 : p.pinned ? 1 : 2);
-          return list.slice().sort((a, b) => tier(a) - tier(b) || rank(a) - rank(b));
+          // "hidden" profiles stay out of the list, but a direct #link still shows them.
+          return list.filter((p) => !p.hidden || p.id === target)
+            .sort((a, b) => tier(a) - tier(b) || rank(a) - rank(b));
         };
         render(order(data));
         if (location.hash) $("grid").firstElementChild?.scrollIntoView({ block: "start" });
