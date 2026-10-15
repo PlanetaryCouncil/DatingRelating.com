@@ -177,7 +177,7 @@
       head.append(el("div", { class: "date" }, when ||" "));
       c.append(head);
 
-      c.append(embedFrame(p.post_url));
+      c.append(embedFrame(p.post_url, { restricted: p.age_restricted }));
       const more = personUrl(p);
       if (more) c.append(el("a", { class: "more", href: more }, "Read more →"));
       return c;

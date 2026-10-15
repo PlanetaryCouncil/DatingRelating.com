@@ -7,7 +7,7 @@ Single people from Instagram, sorted by where they are right now, plus protocols
 - `/co-founder-co-lover/` Co-founder & Co-lover
 
 - `/people/<id>/` Personal pages, generated for every profile that has a `"bio"`
-- `pending.json` (local only, never committed): people to ask before listing. Move an entry into `profiles.json` once they say yes.
+- Profiles with `"hidden": true` stay out of the public list but open via a direct link (`/#id`), with a "Waiting for approval" notice.
 
 Static site. After editing `profiles.json`, run `python3 build.py` to (re)generate the personal pages, then commit.
 Preview locally with `python3 -m http.server`.

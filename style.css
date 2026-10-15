@@ -124,3 +124,16 @@ h1 em {
   display: block; padding: 28px; border-radius: 16px; background: var(--chip);
   color: var(--accent); font-weight: 600; text-decoration: none; text-align: center;
 }
+
+/* Age-restricted posts can't be embedded: link panel instead (see restrictedFrame in embeds.js) */
+.frame.restricted {
+  display: grid; place-items: center; align-content: center; gap: 6px; aspect-ratio: 4 / 5;
+  text-decoration: none; color: var(--text); text-align: center; padding: 24px;
+  background: linear-gradient(160deg, var(--chip), var(--surface));
+}
+.frame.restricted .r-badge {
+  width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+  font-weight: 800; font-size: 20px; color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+.frame.restricted .r-title { font-weight: 600; margin-top: 6px; }
+.frame.restricted .r-sub { color: var(--accent); font-weight: 600; font-size: 14px; }

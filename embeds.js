@@ -49,7 +49,19 @@ function frameSrc(s) {
     : `https://platform.twitter.com/embed/Tweet.html?id=${s.id}&dnt=true&theme=${dark ? "dark" : "light"}`;
 }
 
-function embedFrame(postUrl) {
+// Age-restricted posts can't be embedded (Instagram only shows them to logged-in adults),
+// so show a link panel instead of an empty frame.
+function restrictedFrame(postUrl) {
+  const s = source(postUrl);
+  const frame = el("a", { class: "frame restricted", href: postUrl, target: "_blank", rel: "noopener" });
+  frame.append(el("span", { class: "r-badge" }, "18+"),
+    el("span", { class: "r-title" }, "Age-restricted post"),
+    el("span", { class: "r-sub" }, s?.kind === "x" ? "Open on X →" : "Open on Instagram →"));
+  return frame;
+}
+
+function embedFrame(postUrl, opts = {}) {
+  if (opts.restricted) return restrictedFrame(postUrl);
   const s = source(postUrl);
   const frame = el("div", { class: `frame ${s.kind}` });
   frame.append(el("a", { class: "fallback", href: postUrl, target: "_blank", rel: "noopener" },
