@@ -137,3 +137,4 @@ h1 em {
 }
 .frame.restricted .r-title { font-weight: 600; margin-top: 6px; }
 .frame.restricted .r-sub { color: var(--accent); font-weight: 600; font-size: 14px; }
+.frame.threads iframe { height: 380px; }

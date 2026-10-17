@@ -15,6 +15,8 @@ const fullPlace = (p) => [p.country, p.region, p.city].filter(Boolean).join(", "
 function source(url = "") {
   let m = url.match(/instagram\.com\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
   if (m) return { kind: "ig", code: m[1] };
+  m = url.match(/threads\.(?:com|net)\/@([^/]+)\/post\/([A-Za-z0-9_-]+)/);
+  if (m) return { kind: "threads", user: m[1], code: m[2] };
   m = url.match(/(?:x|twitter)\.com\/[^/]+\/status\/(\d+)/);
   if (m) return { kind: "x", id: m[1] };
   return null;
@@ -26,7 +28,7 @@ const IG_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
 function postedAt(p) {
   if (p.posted) return new Date(p.posted);
   const s = source(p.post_url);
-  if (s?.kind === "ig") {
+  if (s?.kind === "ig" || s?.kind === "threads") { // Threads (Meta) uses Instagram's ID scheme
     let id = 0n;
     for (const ch of s.code.slice(0, 11)) id = id * 64n + BigInt(IG_ALPHABET.indexOf(ch));
     return new Date(Number(id >> 23n) + 1314220021721);
@@ -43,10 +45,11 @@ const personUrl = (p) => (p.bio ? `/people/${slugOf(p)}/` : null);
 // Embeds are plain iframes with loading="lazy": nothing from Instagram or X loads until a
 // card is about to scroll into view, and no embed.js / widgets.js scripts are needed at all.
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+const PLATFORM = { ig: "Instagram", threads: "Threads", x: "X" };
 function frameSrc(s) {
-  return s.kind === "ig"
-    ? `https://www.instagram.com/p/${s.code}/embed/captioned/`
-    : `https://platform.twitter.com/embed/Tweet.html?id=${s.id}&dnt=true&theme=${dark ? "dark" : "light"}`;
+  if (s.kind === "ig") return `https://www.instagram.com/p/${s.code}/embed/captioned/`;
+  if (s.kind === "threads") return `https://www.threads.com/@${s.user}/post/${s.code}/embed`;
+  return `https://platform.twitter.com/embed/Tweet.html?id=${s.id}&dnt=true&theme=${dark ? "dark" : "light"}`;
 }
 
 // Age-restricted posts can't be embedded (Instagram only shows them to logged-in adults),
@@ -56,7 +59,7 @@ function restrictedFrame(postUrl) {
   const frame = el("a", { class: "frame restricted", href: postUrl, target: "_blank", rel: "noopener" });
   frame.append(el("span", { class: "r-badge" }, "18+"),
     el("span", { class: "r-title" }, "Age-restricted post"),
-    el("span", { class: "r-sub" }, s?.kind === "x" ? "Open on X →" : "Open on Instagram →"));
+    el("span", { class: "r-sub" }, `Open on ${PLATFORM[s?.kind] || "Instagram"} →`));
   return frame;
 }
 
@@ -65,9 +68,9 @@ function embedFrame(postUrl, opts = {}) {
   const s = source(postUrl);
   const frame = el("div", { class: `frame ${s.kind}` });
   frame.append(el("a", { class: "fallback", href: postUrl, target: "_blank", rel: "noopener" },
-    s.kind === "ig" ? "View on Instagram →" : "View on X →"));
+    `View on ${PLATFORM[s.kind]} →`));
   const f = el("iframe", {
-    src: frameSrc(s), loading: "lazy", title: s.kind === "ig" ? "Instagram post" : "Post on X",
+    src: frameSrc(s), loading: "lazy", title: `Post on ${PLATFORM[s.kind]}`,
     scrolling: "no", referrerpolicy: "strict-origin-when-cross-origin",
   });
   // X sometimes never sends its size on the first load; reload the frame once if so.
@@ -90,9 +93,10 @@ function upgradeEmbeds(root = document) {
 addEventListener("message", (e) => {
   let host;
   try { host = new URL(e.origin).hostname; } catch { return; }
-  if (!/(^|\.)instagram\.com$|^platform\.twitter\.com$/.test(host)) return;
+  if (!/(^|\.)(instagram|threads)\.(com|net)$|^platform\.twitter\.com$/.test(host)) return;
   let msg = e.data, h;
   try { if (typeof msg === "string") msg = JSON.parse(msg); } catch { return; }
+  if (typeof msg === "number") h = msg; // Threads sends a bare height
   if (msg?.type === "MEASURE") h = msg.details?.height;
   const x = msg?.["twttr.embed"];
   if (x?.method === "twttr.private.resize") h = x.params?.[0]?.height;

@@ -35,7 +35,8 @@ def posted_at(p):
     if p.get("posted"):
         return datetime.fromisoformat(p["posted"])
     url = p.get("post_url", "")
-    m = re.search(r"instagram\.com/(?:p|reel)/([A-Za-z0-9_-]+)", url)
+    m = re.search(r"instagram\.com/(?:p|reel)/([A-Za-z0-9_-]+)", url) or \
+        re.search(r"threads\.(?:com|net)/@[^/]+/post/([A-Za-z0-9_-]+)", url)
     if m:
         n = 0
         for ch in m.group(1)[:11]:
@@ -114,6 +115,7 @@ def page(p):
       <div class="navlinks">
         <a href="/" aria-current="page">Dating</a>
         <a href="/relating/">Relating</a>
+        <a href="/frameworks/">Frameworks</a>
         <a href="/hacker-mindset/">Hacker Mindset</a>
         <a href="/co-founder-co-lover/">Co-founder &amp; Co-lover</a>
         <a href="/about/">About</a>
