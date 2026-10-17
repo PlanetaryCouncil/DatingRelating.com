@@ -183,16 +183,19 @@
       return c;
     }
 
-    // "#" in the tile's top-right corner: copies a link that opens the page with this person first.
+    const LINK_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg>';
+
+    // Link icon in the tile's top-right corner: copies a link that opens the page with this person first.
     function permalink(p) {
-      const a = el("a", { class: "permalink", href: `#${p.id}`, title: "Copy link to this profile", "aria-label": "Copy link to this profile" }, "#");
+      const a = el("a", { class: "permalink", href: `#${p.id}`, title: "Copy link to this profile", "aria-label": "Copy link to this profile" });
+      a.innerHTML = LINK_ICON;
       a.addEventListener("click", async (e) => {
         e.preventDefault();
         history.replaceState(null, "", `#${p.id}`);
         try { await navigator.clipboard.writeText(location.href); a.textContent = "Copied"; }
         catch { a.textContent = "Link set"; }
         a.classList.add("done");
-        setTimeout(() => { a.textContent = "#"; a.classList.remove("done"); }, 1600);
+        setTimeout(() => { a.innerHTML = LINK_ICON; a.classList.remove("done"); }, 1600);
       });
       return a;
     }
