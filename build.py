@@ -73,6 +73,7 @@ def page(p):
     date = " · ".join(x for x in (
         f"Posted {d.day} {d.strftime('%b %Y')}" if d else "",
         "Relocation friendly" if p.get("relocation") else "",
+        f"{p['passports']}× passport" if (p.get("passports") or 0) > 1 else "",
     ) if x)
     first_line = re.sub(r"https?://\S+", "", p["bio"]).strip().split("\n")[0][:155]
     e = html.escape

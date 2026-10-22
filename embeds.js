@@ -70,17 +70,32 @@ function embedFrame(postUrl, opts = {}) {
   frame.append(el("a", { class: "fallback", href: postUrl, target: "_blank", rel: "noopener" },
     `View on ${PLATFORM[s.kind]} →`));
   const f = el("iframe", {
-    src: frameSrc(s), loading: "lazy", title: `Post on ${PLATFORM[s.kind]}`,
-    scrolling: "no", referrerpolicy: "strict-origin-when-cross-origin",
+    title: `Post on ${PLATFORM[s.kind]}`, scrolling: "no", referrerpolicy: "strict-origin-when-cross-origin",
   });
+  f.dataset.src = frameSrc(s);
   // X sometimes never sends its size on the first load; reload the frame once if so.
   let retried = false;
-  f.addEventListener("load", () => setTimeout(() => {
-    if (!frame.classList.contains("ready") && !retried) { retried = true; f.src = f.src; }
-  }, 5000));
+  f.addEventListener("load", () => {
+    if (!f.getAttribute("src")) return; // ignore the initial about:blank load
+    setTimeout(() => {
+      if (!frame.classList.contains("ready") && !retried) { retried = true; f.src = f.src; }
+    }, 5000);
+  });
   frame.append(f);
+  if (opts.eager) startFrame(f); else preloader.observe(f);
   return frame;
 }
+
+// Preloading: tiles near the top load immediately; the rest start loading about three
+// screens before they scroll into view, so they are ready by the time you get there.
+function startFrame(f) {
+  if (!f.getAttribute("src") && f.dataset.src) f.src = f.dataset.src;
+}
+const preloader = "IntersectionObserver" in window
+  ? new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { startFrame(e.target); preloader.unobserve(e.target); }
+    }, { rootMargin: "300% 0px" })
+  : { observe: startFrame, unobserve() {} };
 
 // Turn static <div data-post-url="..."> placeholders into live embeds (used on people pages).
 function upgradeEmbeds(root = document) {

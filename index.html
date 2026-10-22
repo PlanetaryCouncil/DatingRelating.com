@@ -9,6 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
+  <!-- Open connections to the embed hosts early, so posts appear faster -->
+  <link rel="preconnect" href="https://www.instagram.com">
+  <link rel="preconnect" href="https://scontent.cdninstagram.com" crossorigin>
+  <link rel="preconnect" href="https://static.cdninstagram.com" crossorigin>
+  <link rel="preconnect" href="https://www.threads.com">
+  <link rel="preconnect" href="https://platform.twitter.com">
   <style>
     .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
     .card {
@@ -162,7 +168,7 @@
       return seed;
     }
 
-    function embedCard(p) {
+    function embedCard(p, i) {
       const c = el("article", { class: "ecard", id: p.id });
       if (p.hidden) {
         const notice = el("div", { class: "notice", role: "status" });
@@ -174,11 +180,11 @@
       loc.title = fullPlace(p);
       head.append(loc, permalink(p));
       const d = postedAt(p);
-      const when = [d && `Posted ${fmtDate(d)}`, p.relocation && "Relocation friendly"].filter(Boolean).join(" · ");
+      const when = [d && `Posted ${fmtDate(d)}`, p.relocation && "Relocation friendly", p.passports > 1 && `${p.passports}× passport`].filter(Boolean).join(" · ");
       head.append(el("div", { class: "date" }, when ||" "));
       c.append(head);
 
-      c.append(embedFrame(p.post_url, { restricted: p.age_restricted }));
+      c.append(embedFrame(p.post_url, { restricted: p.age_restricted, eager: i < 6 }));
       const more = personUrl(p);
       if (more) c.append(el("a", { class: "more", href: more }, "Read more →"));
       return c;
@@ -201,8 +207,8 @@
       return a;
     }
 
-    function card(p) {
-      if (source(p.post_url) && p.embed !== false) return embedCard(p);
+    function card(p, i) {
+      if (source(p.post_url) && p.embed !== false) return embedCard(p, i);
       const c = el("article", { class: "card" });
       if (p.image) {
         c.append(el("img", { src: p.image, alt: p.name || "Photo", loading: "lazy" }));
@@ -229,7 +235,7 @@
     }
 
     function render(list) {
-      $("grid").replaceChildren(...list.map(card));
+      $("grid").replaceChildren(...list.map((p, i) => card(p, i)));
       $("grid").classList.toggle("has-embeds", list.some((p) => source(p.post_url)));
       $("empty").hidden = list.length > 0;
     }
