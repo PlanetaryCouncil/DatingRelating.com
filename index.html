@@ -90,6 +90,11 @@
       display: block; margin: 12px 6px 2px; color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: none;
     }
     .ecard .more:hover { text-decoration: underline; }
+    .ecard .note {
+      display: block; margin: 0 0 12px; padding: 10px 14px; border-radius: 12px; background: var(--chip);
+      color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: none;
+    }
+    .ecard .note:hover { text-decoration: underline; }
     .ecard .fallback {
       display: block; padding: 28px; border-radius: 16px; background: var(--chip);
       color: var(--accent); font-weight: 600; text-decoration: none; text-align: center;
@@ -183,6 +188,7 @@
       const when = [d && `Posted ${fmtDate(d)}`, p.relocation && "Relocation friendly", p.passports > 1 && `${p.passports}× passport`].filter(Boolean).join(" · ");
       head.append(el("div", { class: "date" }, when ||" "));
       c.append(head);
+      if (p.note) c.append(el("a", { class: "note", href: p.post_url, target: "_blank", rel: "noopener" }, `${p.note} →`));
 
       c.append(embedFrame(p.post_url, { restricted: p.age_restricted, eager: i < 6 }));
       const more = personUrl(p);
