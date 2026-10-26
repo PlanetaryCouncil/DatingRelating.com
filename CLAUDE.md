@@ -30,7 +30,7 @@ Optional fields:
 - `"relocation": true` shows "Relocation friendly"; `"passports": 3` shows "3× passport"
 - `"age_restricted": true`: Instagram won't embed these; tile shows an 18+ "Open on Instagram" panel
 - `"bio"`: enables a personal page and a "Read more →" link (blank line = new paragraph; URLs auto-link)
-- `"note": "Explore the comments section"`: highlighted line above the embed, links to the post
+- `"note": "Explore the comments section"`: highlighted line above the embed, links to the post. Add only when the owner explicitly asks; don't suggest it.
 - `"name"`, `"posted"` (override the date)
 
 Notes:
