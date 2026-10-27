@@ -190,7 +190,7 @@
       c.append(head);
       if (p.note) c.append(el("a", { class: "note", href: p.post_url, target: "_blank", rel: "noopener" }, `${p.note} →`));
 
-      c.append(embedFrame(p.post_url, { restricted: p.age_restricted, eager: i < 6 }));
+      c.append(embedFrame(p.post_url, { restricted: p.age_restricted, noEmbed: p.no_embed, eager: i < 6 }));
       const more = personUrl(p);
       if (more) c.append(el("a", { class: "more", href: more }, "Read more →"));
       return c;
