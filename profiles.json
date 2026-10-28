@@ -238,5 +238,12 @@
     "instagram": "pandatipi",
     "post_url": "https://www.instagram.com/reel/DceFfP2sqE-/",
     "added": "2026-10-28"
+  },
+  {
+    "id": "fahnee",
+    "instagram": "fahnee",
+    "post_url": "https://www.instagram.com/reel/Dd9V-xqIKr1/",
+    "age_restricted": true,
+    "added": "2026-10-28"
   }
 ]
