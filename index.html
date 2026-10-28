@@ -95,6 +95,12 @@
       color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: none;
     }
     .ecard .note:hover { text-decoration: underline; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
+    .filters a {
+      padding: 8px 14px; border-radius: 999px; background: var(--chip); color: var(--text);
+      font-weight: 600; font-size: 14px; text-decoration: none;
+    }
+    .filters a[aria-current] { background: var(--accent); color: #fff; }
     .ecard .fallback {
       display: block; padding: 28px; border-radius: 16px; background: var(--chip);
       color: var(--accent); font-weight: 600; text-decoration: none; text-align: center;
@@ -131,6 +137,7 @@
       </p>
     </header>
 
+    <div class="filters" id="filters" hidden></div>
     <main class="grid" id="grid"></main>
     <p class="empty" id="empty" hidden>No one here yet. <a href="#join">Be the first</a>.</p>
 
@@ -253,16 +260,29 @@
         // (visitor seed + profile id). New profiles slot in without reshuffling everyone else.
         // A shared link (#id) puts that person first; "pinned" profiles come next.
         const rank = (p) => hash(`${visitorSeed()}:${p.id}`);
+        // #comments is a category: only posts whose comment sections are worth reading ("note").
+        const COMMENTS = "comments";
         const order = (list) => {
           const target = decodeURIComponent(location.hash.slice(1));
+          if (target === COMMENTS) return list.filter((p) => p.note && !p.hidden).sort((a, b) => rank(a) - rank(b));
           const tier = (p) => (p.id === target ? 0 : p.pinned ? 1 : 2);
           // "hidden" profiles stay out of the list, but a direct #link still shows them.
           return list.filter((p) => !p.hidden || p.id === target)
             .sort((a, b) => tier(a) - tier(b) || rank(a) - rank(b));
         };
+        const commentCount = data.filter((p) => p.note && !p.hidden).length;
+        const filters = () => {
+          const onComments = location.hash === `#${COMMENTS}`;
+          const all = el("a", { href: "#" }, "Everyone");
+          const com = el("a", { href: `#${COMMENTS}` }, `Explore the comments (${commentCount})`);
+          (onComments ? com : all).setAttribute("aria-current", "true");
+          $("filters").replaceChildren(all, com);
+          $("filters").hidden = commentCount === 0;
+        };
+        filters();
         render(order(data));
-        if (location.hash) $("grid").firstElementChild?.scrollIntoView({ block: "start" });
-        addEventListener("hashchange", () => render(order(data)));
+        if (location.hash && location.hash !== `#${COMMENTS}`) $("grid").firstElementChild?.scrollIntoView({ block: "start" });
+        addEventListener("hashchange", () => { filters(); render(order(data)); });
       })
       .catch(() => { $("empty").hidden = false; $("empty").textContent = "Could not load profiles."; });
   </script>
