@@ -362,5 +362,15 @@
     "post_url": "https://www.instagram.com/p/DfDL1dSooU9/",
     "note": "Explore the comments section",
     "added": "2026-11-01"
+  },
+  {
+    "id": "claire-dallas",
+    "name": "Claire",
+    "instagram": "hailey.steckler",
+    "post_url": "https://www.instagram.com/p/DfTAyeKGrD2/",
+    "city": "Dallas",
+    "region": "Texas",
+    "country": "United States",
+    "added": "2026-11-04"
   }
 ]
