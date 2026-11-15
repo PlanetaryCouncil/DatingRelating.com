@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=value-first-3">
+  <link rel="stylesheet" href="/style.css?v=green-square-4">
   <!-- Open connections to the embed hosts early, so posts appear faster -->
   <link rel="preconnect" href="https://www.instagram.com">
   <link rel="preconnect" href="https://scontent.cdninstagram.com" crossorigin>
@@ -18,7 +18,7 @@
   <style>
     .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
     .card {
-      position: relative; aspect-ratio: 3 / 4; border-radius: 24px; overflow: hidden;
+      position: relative; aspect-ratio: 3 / 4; border-radius: 0; overflow: hidden;
       background: linear-gradient(135deg, var(--blob-1), var(--blob-3));
       color: #fff; isolation: isolate;
       transition: transform .25s ease, box-shadow .25s ease;
@@ -37,7 +37,7 @@
     .top { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; gap: 6px; flex-wrap: wrap; }
     .tag {
       background: rgba(0,0,0,.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border-radius: 999px; padding: 4px 11px; font-size: 12px; font-weight: 500;
+      border-radius: 0; padding: 4px 11px; font-size: 12px; font-weight: 500;
     }
     .tag.ex { background: var(--accent); }
     .bottom { position: absolute; left: 18px; right: 18px; bottom: 18px; display: flex; flex-direction: column; gap: 6px; }
@@ -58,7 +58,7 @@
       .grid.has-embeds > * { margin-bottom: 0; }
     }
     .ecard {
-      background: var(--surface); border: 1px solid var(--line); border-radius: 24px;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 0;
       padding: 14px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 8px 30px rgba(0,0,0,.05);
     }
@@ -69,7 +69,7 @@
     .ecard .head .date { grid-column: 1 / -1; }
     .permalink {
       font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none;
-      min-width: 32px; height: 28px; padding: 0 10px; border-radius: 999px;
+      min-width: 32px; height: 28px; padding: 0 10px; border-radius: 0;
       display: inline-grid; place-items: center; background: var(--chip);
       transition: color .15s ease, background .15s ease;
     }
@@ -81,7 +81,7 @@
     .ecard .tag { background: var(--chip); color: var(--text); backdrop-filter: none; white-space: nowrap; }
     .ecard .notice {
       display: flex; flex-direction: column; gap: 2px; margin: -2px -2px 14px; padding: 16px 18px;
-      border-radius: 16px; color: #fff; background: linear-gradient(120deg, #ea580c, #f97316);
+      border-radius: 0; color: #fff; background: linear-gradient(120deg, #ea580c, #f97316);
       box-shadow: 0 8px 24px rgba(234, 88, 12, .3);
     }
     .ecard .notice strong { font-size: 18px; letter-spacing: -0.01em; }
@@ -91,18 +91,18 @@
     }
     .ecard .more:hover { text-decoration: underline; }
     .ecard .note {
-      display: block; margin: 0 0 12px; padding: 10px 14px; border-radius: 12px; background: var(--chip);
+      display: block; margin: 0 0 12px; padding: 10px 14px; border-radius: 0; background: var(--chip);
       color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: none;
     }
     .ecard .note:hover { text-decoration: underline; }
     .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
     .filters a {
-      padding: 8px 14px; border-radius: 999px; background: var(--chip); color: var(--text);
+      padding: 8px 14px; border-radius: 0; background: var(--chip); color: var(--text);
       font-weight: 600; font-size: 14px; text-decoration: none;
     }
     .filters a[aria-current] { background: var(--accent); color: #fff; }
     .ecard .fallback {
-      display: block; padding: 28px; border-radius: 16px; background: var(--chip);
+      display: block; padding: 28px; border-radius: 0; background: var(--chip);
       color: var(--accent); font-weight: 600; text-decoration: none; text-align: center;
     }
     .empty { color: var(--muted); padding: 60px 0; text-align: center; }
@@ -132,7 +132,12 @@
       <h1>Find your people.<br>Grow something <em>real.</em></h1>
       <p class="lede">Discover people through their real posts, see where they are in the world, and explore ideas for building better relationships.</p>
       <p class="connection-mission">We believe the world would be a better place with more people happily in love.</p>
-      <div class="connection-actions"><a class="btn" href="#grid">Explore the people ↓</a><a class="connection-secondary" href="#membership">Why become a member?</a></div>
+      <div class="hero-purchase">
+        <p class="hero-offer-note">Solana Breakpoint · In person only · Very limited offer</p>
+        <button class="btn hero-buy" type="button" data-membership-open hidden>Buy now · 1 SOL lifetime ↗</button>
+        <noscript><a class="btn hero-buy" href="#membership">Lifetime membership · 1 SOL</a></noscript>
+      </div>
+      <div class="connection-actions"><a class="connection-secondary" href="#grid">Explore the people ↓</a><a class="connection-secondary" href="#membership">Why become a member?</a></div>
     </header>
 
     <section class="connection-values" aria-label="What you can explore">
