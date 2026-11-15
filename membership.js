@@ -17,9 +17,13 @@
   const ready = validAddress(recipient);
   document.querySelectorAll('[data-membership-open]').forEach((button) => {
     button.hidden = false;
-    button.addEventListener('click', () => dialog.showModal());
+    button.addEventListener('click', () => {
+      dialog.showModal();
+      document.body.classList.add('checkout-open');
+    });
   });
   document.getElementById('checkout-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => document.body.classList.remove('checkout-open'));
   if (!ready) return;
 
   const order = 'DR-' + crypto.randomUUID();
@@ -32,16 +36,35 @@
   const paymentURL = 'solana:' + recipient + '?' + parameters.toString();
   document.getElementById('payment-unavailable').hidden = true;
   document.getElementById('payment-ready').hidden = false;
-  document.getElementById('payment-recipient').textContent = recipient;
+  document.getElementById('payment-recipient').value = recipient;
+  // Encode the address itself, so any wallet scanner can use it. Amount is entered by the payer.
+  try {
+    const qr = qrcode(0, 'M');
+    qr.addData(recipient, 'Byte');
+    qr.make();
+    document.getElementById('payment-qr').innerHTML = qr.createSvgTag({cellSize: 4, margin: 16, scalable: true});
+  } catch {
+    document.querySelector('.payment-qr').hidden = true;
+  }
   document.getElementById('payment-recipient-note').textContent = window.DATING_MEMBERSHIP.recipientNote || '';
   document.getElementById('payment-order').textContent = order;
   document.getElementById('payment-wallet').href = paymentURL;
   document.getElementById('payment-link').value = paymentURL;
-  document.getElementById('membership-availability').textContent = 'One payment. Membership confirmed manually.';
+  document.getElementById('membership-availability').textContent = 'In-person offer. Mars confirms your membership and badge.';
   document.getElementById('payment-receipt').href = 'mailto:datingrelatingdotcom@gmail.com?' + new URLSearchParams({
     subject: 'Lifetime membership · ' + order,
     body: 'Hello! Please verify my 1 SOL lifetime membership payment.\n\nOrder: ' + order + '\nReceiving wallet: ' + recipient + '\nTransaction signature or explorer link: \nMy profile or social link: \n'
   }).toString().replace(/\+/g, '%20');
+  document.getElementById('address-copy').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(recipient);
+      status.textContent = 'Address copied. Send 1 SOL on Solana mainnet.';
+    } catch {
+      const address = document.getElementById('payment-recipient');
+      address.focus(); address.select();
+      status.textContent = 'Select and copy the address above. Send 1 SOL on Solana mainnet.';
+    }
+  });
   document.getElementById('payment-copy').addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(paymentURL);

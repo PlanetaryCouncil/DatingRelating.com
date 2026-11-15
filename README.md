@@ -58,3 +58,17 @@ the multisig configuration account), and publish. Previously issued payment
 links still point to the old wallet. Keep verifying earlier payments against
 their original recipient; email receipts include that address for reconciliation.
 Changing this configuration does not move previously received funds.
+
+## In-person mobile offer
+
+The Breakpoint price is advertised as an in-person-only offer. Mars must confirm
+both the meeting and payment before recording lifetime membership and the
+permanent “Verified in person by Mars” badge. A payment is not proof of a meeting.
+Specific extra privileges are not yet defined. There is no fabricated countdown,
+automatic verification, or automatic badge issuance in this static MVP.
+
+Checkout offers a 1 SOL Solana Pay link, copyable raw receiving address, and an
+address-only QR. Scanning the QR requires the payer to enter 1 SOL. The QR is
+created locally from the same configured address using vendored MIT-licensed
+qrcode-generator 2.0.4; no external QR service or runtime CDN is used. Changing
+the recipient also changes the QR. Desktop and mobile share the same flow.

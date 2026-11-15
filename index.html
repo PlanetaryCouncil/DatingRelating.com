@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>DatingRelating.com</title>
   <meta name="description" content="Real people. Real connection. 1 SOL lifetime membership — the DatingRelating.com Solana Breakpoint special.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css?v=mobile-membership-2">
   <!-- Open connections to the embed hosts early, so posts appear faster -->
   <link rel="preconnect" href="https://www.instagram.com">
   <link rel="preconnect" href="https://scontent.cdninstagram.com" crossorigin>
@@ -110,7 +110,7 @@
 
   </style>
 </head>
-<body>
+<body class="dating-home">
   <div class="blobs" aria-hidden="true"><span></span><span></span><span></span></div>
 
   <div class="wrap">
@@ -128,24 +128,20 @@
     </nav>
 
     <header class="membership-hero">
-      <div>
-        <p class="eyebrow">Dating starts here. Relating goes deeper.</p>
-        <h1>Real people.<br>Room for <em>connection.</em></h1>
-        <p class="lede">Meet people through the things they share. Find aligned vibes, attraction and a little common ground. See where it takes you.</p>
-        <div class="membership-actions">
-          <a class="btn" href="#membership">Lifetime membership · 1 SOL</a>
-          <a class="btn ghost" href="#grid">Meet the people ↓</a>
-        </div>
+      <div class="membership-intro">
+        <p class="eyebrow">Solana Breakpoint · In person only</p>
+        <h1>We met.<br>Let’s make it <em>count.</em></h1>
+        <p class="lede">Real people. Real connection. A founding membership that starts with a hello.</p>
+        <a class="browse-people" href="#grid">Meet the people ↓</a>
       </div>
       <aside class="membership-offer panel" id="membership" aria-labelledby="membership-title">
-        <p class="eyebrow">Solana Breakpoint special</p>
-        <h2 id="membership-title">A little SOL.<br>A lifetime of possibility.</h2>
-        <p class="membership-price">1 <span>SOL</span></p>
-        <p class="membership-caption">Lifetime membership. One payment.</p>
-        <p class="membership-description">Join DatingRelating.com in a co-op spirit: people coming together, making room for connection.</p>
-        <button class="btn membership-buy" type="button" data-membership-open hidden>Join for 1 SOL ↗</button>
+        <p class="offer-exclusive"><span aria-hidden="true">✦</span> Solana Breakpoint — in person only — very limited offer</p>
+        <div class="offer-price-row"><div><h2 id="membership-title">Founding member.</h2><p class="membership-caption">Lifetime membership. One payment.</p></div><p class="membership-price">1 <span>SOL</span></p></div>
+        <div class="founder-badge"><span class="badge-mark" aria-hidden="true">✓</span><div><strong>Verified in person by Mars</strong><span>Your badge, for life.</span></div></div>
+        <p class="membership-description">Meet me at Breakpoint and join while we’re together. Keep your in-person badge for life, with extra member privileges to be announced.</p>
+        <button class="btn membership-buy" type="button" data-membership-open hidden>Get lifetime membership · 1 SOL ↗</button>
         <noscript><a class="btn" href="mailto:datingrelatingdotcom@gmail.com?subject=1%20SOL%20lifetime%20membership">Ask about membership</a></noscript>
-        <p class="membership-note" id="membership-availability">Pay in SOL. Membership confirmed manually.</p>
+        <p class="membership-note" id="membership-availability">In-person offer. Mars confirms your membership and badge.</p>
       </aside>
     </header>
 
@@ -188,28 +184,25 @@
   </div>
 
   <dialog id="membership-checkout" class="membership-checkout" aria-labelledby="checkout-title">
-    <button type="button" class="checkout-close" id="checkout-close" aria-label="Close membership checkout">×</button>
-    <p class="eyebrow">Solana Breakpoint special</p>
-    <h2 id="checkout-title">Your lifetime membership.</h2>
-    <p class="checkout-total">1 SOL <span>+ network fee</span></p>
+    <div class="checkout-heading"><div><p class="eyebrow">Solana Breakpoint · In person only · Very limited offer</p><h2 id="checkout-title">Send 1 SOL. You’re in.</h2></div><button type="button" class="checkout-close" id="checkout-close" aria-label="Close membership checkout">×</button></div>
     <div id="payment-unavailable">
       <p>Membership payments aren't open yet. Get in touch about the 1 SOL lifetime offer.</p>
       <a class="btn" href="mailto:datingrelatingdotcom@gmail.com?subject=1%20SOL%20lifetime%20membership">Ask about membership ↗</a>
     </div>
     <div id="payment-ready" hidden>
-      <p>Pay once in SOL on Solana mainnet. Open the payment request in a Solana Pay compatible wallet, review the details, then approve it there.</p>
-      <p id="payment-recipient-note"></p>
-      <p>This payment is for lifetime membership. It does not mint an NFT.</p>
-      <dl class="payment-details"><dt>Receiving wallet · Solana mainnet</dt><dd id="payment-recipient"></dd><dt>Your order</dt><dd id="payment-order"></dd></dl>
-      <div class="membership-actions"><a class="btn" id="payment-wallet">Open in wallet ↗</a><button class="btn ghost" type="button" id="payment-copy">Copy payment link</button></div>
-      <label class="payment-link-label" for="payment-link">Payment link</label>
-      <input id="payment-link" type="text" readonly spellcheck="false">
-      <p id="payment-status" role="status"></p>
-      <div class="receipt-note"><strong>After paying</strong><p>Email your transaction signature and profile link. Membership is activated after we verify your payment; opening your wallet does not confirm a payment.</p><a id="payment-receipt">Send payment details by email ↗</a></div>
+      <p class="payment-context">Lifetime membership + your in-person badge.<br><strong>Solana mainnet · 1 SOL + network fee</strong></p>
+      <a class="btn wallet-primary" id="payment-wallet">Open wallet · Send 1 SOL ↗</a>
+      <p class="wallet-help">Opens a Solana Pay compatible wallet. Or copy the address into Phantom and send 1 SOL.</p>
+      <div class="address-block"><label for="payment-recipient">Mars’s receiving address</label><div class="address-copy-row"><textarea id="payment-recipient" readonly rows="2" spellcheck="false" autocapitalize="off"></textarea><button class="btn ghost" type="button" id="address-copy">Copy address</button></div></div>
+      <p id="payment-status" class="payment-status" role="status" aria-live="polite"></p>
+      <figure class="payment-qr"><div id="payment-qr" role="img" aria-label="QR code of Mars’s Solana receiving address"></div><figcaption>Scan this address with your wallet.<br>Enter <strong>1 SOL</strong> to send.</figcaption></figure>
+      <div class="receipt-note"><strong>Then show me your payment.</strong><p>Show Mars the transaction and your profile while you’re together. He’ll verify the payment and confirm your lifetime membership and in-person badge.</p><a id="payment-receipt">Send payment details by email ↗</a></div>
+      <details class="payment-more"><summary>Payment details &amp; another way to copy</summary><p id="payment-recipient-note"></p><p>This is a direct wallet transfer, not an NFT mint. Payment alone does not verify an in-person meeting. Extra privileges will be announced.</p><p class="order-note">Order <span id="payment-order"></span></p><label class="payment-link-label" for="payment-link">Solana Pay link</label><input id="payment-link" type="text" readonly spellcheck="false"><button class="btn ghost" type="button" id="payment-copy">Copy payment link</button></details>
     </div>
   </dialog>
   <script src="/membership-config.js"></script>
-  <script src="/membership.js"></script>
+  <script src="/vendor/qrcode-2.0.4.js"></script>
+  <script src="/membership.js?v=mobile-membership-2"></script>
   <script src="/embeds.js"></script>
   <script>
     const $ = (id) => document.getElementById(id);
