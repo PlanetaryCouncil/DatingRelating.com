@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DatingRelating.com</title>
-  <meta name="description" content="Real people from Instagram. Playing WIN WIN WIN games. Aligned vibes, attraction, lifestyle and geography matter.">
+  <meta name="description" content="Real people. Real connection. 1 SOL lifetime membership — the DatingRelating.com Solana Breakpoint special.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -123,20 +123,46 @@
         <a href="/hacker-mindset/">Hacker Mindset</a>
         <a href="/co-founder-co-lover/">Co-founder &amp; Co-lover</a>
         <a href="/about/">About</a>
-        <a class="btn" href="#join">Get listed</a>
+        <a class="btn" href="#membership">1 SOL · Lifetime</a>
       </div>
     </nav>
 
-    <header>
-      <h1>Possibly single, and <em>somewhere</em> in the world.</h1>
-      <p class="lede">
-        Real people, real posts.<br>
-        Playing WIN-WIN-WIN games.<br>
-        Aligned vibes, attraction, lifestyle and geography help a lot.<br>
-        Let's see what's on the menu&hellip;
-      </p>
+    <header class="membership-hero">
+      <div>
+        <p class="eyebrow">Dating starts here. Relating goes deeper.</p>
+        <h1>Real people.<br>Room for <em>connection.</em></h1>
+        <p class="lede">Meet people through the things they share. Find aligned vibes, attraction and a little common ground. See where it takes you.</p>
+        <div class="membership-actions">
+          <a class="btn" href="#membership">Lifetime membership · 1 SOL</a>
+          <a class="btn ghost" href="#grid">Meet the people ↓</a>
+        </div>
+      </div>
+      <aside class="membership-offer panel" id="membership" aria-labelledby="membership-title">
+        <p class="eyebrow">Solana Breakpoint special</p>
+        <h2 id="membership-title">A little SOL.<br>A lifetime of possibility.</h2>
+        <p class="membership-price">1 <span>SOL</span></p>
+        <p class="membership-caption">Lifetime membership. One payment.</p>
+        <p class="membership-description">Join DatingRelating.com in a co-op spirit: people coming together, making room for connection.</p>
+        <button class="btn membership-buy" type="button" data-membership-open hidden>Join for 1 SOL ↗</button>
+        <noscript><a class="btn" href="mailto:datingrelatingdotcom@gmail.com?subject=1%20SOL%20lifetime%20membership">Ask about membership</a></noscript>
+        <p class="membership-note" id="membership-availability">Pay in SOL. Membership confirmed manually.</p>
+      </aside>
     </header>
 
+    <section class="homepage-auction panel" aria-labelledby="auction-title">
+      <div>
+        <p class="eyebrow">Homepage spotlight · Coming soon</p>
+        <h2 id="auction-title">Make the first impression.</h2>
+        <p>Real-time auctions for featured spots on the homepage. Bid in SOL for a little more visibility.</p>
+      </div>
+      <div class="auction-status">
+        <span class="auction-label">Bidding has not opened</span>
+        <p>Homepage spots will be auctioned separately from lifetime membership. Timing and bidding rules will be announced before the first auction.</p>
+        <a href="mailto:datingrelatingdotcom@gmail.com?subject=Homepage%20auction%20interest">Ask about a homepage spot ↗</a>
+      </div>
+    </section>
+
+    <div class="people-heading"><h2 class="section-title">Possibly single. Somewhere in the world.</h2><p>Real people, real posts. Start with curiosity.</p></div>
     <div class="filters" id="filters" hidden></div>
     <main class="grid" id="grid"></main>
     <p class="empty" id="empty" hidden>No one here yet. <a href="#join">Be the first</a>.</p>
@@ -150,12 +176,40 @@
       </div>
     </section>
 
+    <details class="founder-note panel">
+      <summary>A note from Mars, the founder</summary>
+      <p>I'm single, and I'm building the kind of dating community I'd like to be part of. This project comes from love, lessons learned, and wanting to appreciate connection more deeply. Dating is the first step. Relating is what happens afterwards.</p>
+    </details>
+
     <p class="fine">
       Listed and want to be taken down, or moved city?
       <a href="mailto:datingrelatingdotcom@gmail.com">Email us</a> and it is done the same day.
     </p>
   </div>
 
+  <dialog id="membership-checkout" class="membership-checkout" aria-labelledby="checkout-title">
+    <button type="button" class="checkout-close" id="checkout-close" aria-label="Close membership checkout">×</button>
+    <p class="eyebrow">Solana Breakpoint special</p>
+    <h2 id="checkout-title">Your lifetime membership.</h2>
+    <p class="checkout-total">1 SOL <span>+ network fee</span></p>
+    <div id="payment-unavailable">
+      <p>Membership payments aren't open yet. Get in touch about the 1 SOL lifetime offer.</p>
+      <a class="btn" href="mailto:datingrelatingdotcom@gmail.com?subject=1%20SOL%20lifetime%20membership">Ask about membership ↗</a>
+    </div>
+    <div id="payment-ready" hidden>
+      <p>Pay once in SOL on Solana mainnet. Open the payment request in a Solana Pay compatible wallet, review the details, then approve it there.</p>
+      <p id="payment-recipient-note"></p>
+      <p>This payment is for lifetime membership. It does not mint an NFT.</p>
+      <dl class="payment-details"><dt>Receiving wallet · Solana mainnet</dt><dd id="payment-recipient"></dd><dt>Your order</dt><dd id="payment-order"></dd></dl>
+      <div class="membership-actions"><a class="btn" id="payment-wallet">Open in wallet ↗</a><button class="btn ghost" type="button" id="payment-copy">Copy payment link</button></div>
+      <label class="payment-link-label" for="payment-link">Payment link</label>
+      <input id="payment-link" type="text" readonly spellcheck="false">
+      <p id="payment-status" role="status"></p>
+      <div class="receipt-note"><strong>After paying</strong><p>Email your transaction signature and profile link. Membership is activated after we verify your payment; opening your wallet does not confirm a payment.</p><a id="payment-receipt">Send payment details by email ↗</a></div>
+    </div>
+  </dialog>
+  <script src="/membership-config.js"></script>
+  <script src="/membership.js"></script>
   <script src="/embeds.js"></script>
   <script>
     const $ = (id) => document.getElementById(id);
@@ -281,7 +335,7 @@
         };
         filters();
         render(order(data));
-        if (location.hash && location.hash !== `#${COMMENTS}`) $("grid").firstElementChild?.scrollIntoView({ block: "start" });
+        if (data.some((p) => p.id === decodeURIComponent(location.hash.slice(1)))) $("grid").firstElementChild?.scrollIntoView({ block: "start" });
         addEventListener("hashchange", () => { filters(); render(order(data)); });
       })
       .catch(() => { $("empty").hidden = false; $("empty").textContent = "Could not load profiles."; });

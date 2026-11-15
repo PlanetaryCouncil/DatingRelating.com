@@ -24,3 +24,37 @@ Related to 42: https://github.com/marsrobertson/one-life-true-self/issues/42 Fro
 > Decent connection with my body, clearly above the average. Enjoys flirting (you've been warned) with fit / strong / athletic ladies, sweat is sexy. At least 1 pull-up as a bar of entry to my club 💪
 > Sensual consensual sapiosexual - attracted to intelligence and loads of other things, not necessarily nudity, tease my 🧠 please.
 > You can also share your business secrets with me, what happens in bed stays in bed.
+
+## Solana Breakpoint membership
+
+The homepage presents a **1 SOL lifetime membership**. Set the owner's public
+Solana mainnet receiving address in `membership-config.js` to enable Solana Pay
+transfer requests. Until then, checkout shows an honest “payments aren't open”
+state and an email contact. No example address receives payments.
+
+Payment links request exactly 1 native SOL, with an order memo. The customer
+approves the transfer in their own compatible wallet, pays the network fee, and
+emails the transaction signature and their profile link. Fulfilment is manual:
+verify a successful, finalized mainnet transfer to the configured recipient for
+1 SOL; record its signature and order before activating membership, and never
+reuse a signature for another membership. No keys, wallet signing, or automatic
+membership activation are handled by this static site.
+
+Homepage auctions are explicitly marked **coming soon**. Launching actual
+real-time bidding needs a shared backend, an agreed auction duration and spot
+allocation, server-enforced bid ordering and payment verification. The current
+page does not simulate bids, collect auction payments, or claim auction wins.
+
+### Current MVP recipient
+
+The owner supplied `2rP2kKynGDgdfGyrgKYpSb1RdEFi4NB84s9TzzzVcGno` as
+his personal Phantom receiving address. Checkout discloses this and explicitly
+says that payment does not mint an NFT. This is a real mainnet payment flow,
+not a devnet test. No NFT entitlement or smart-contract integration is implied.
+
+To switch to a multisig, update `recipient` and `recipientNote` in
+`membership-config.js` using the owner-confirmed vault receiving address (not
+the multisig configuration account), and publish. Previously issued payment
+links still point to the old wallet. Keep verifying earlier payments against
+their original recipient; email receipts include that address for reconciliation.
+Changing this configuration does not move previously received funds.

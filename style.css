@@ -138,3 +138,56 @@ h1 em {
 .frame.restricted .r-title { font-weight: 600; margin-top: 6px; }
 .frame.restricted .r-sub { color: var(--accent); font-weight: 600; font-size: 14px; }
 .frame.threads iframe { height: 380px; }
+
+/* Breakpoint lifetime membership */
+.membership-hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .85fr); gap: clamp(28px, 5vw, 72px); align-items: center; padding: 48px 0 56px; }
+.membership-hero h1 { font-size: clamp(54px, 7.2vw, 88px); }
+.membership-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.membership-actions .btn { justify-content: center; }
+button.btn { font-family: inherit; border: 0; cursor: pointer; }
+button.btn.ghost { border: 1px solid var(--line); }
+.membership-offer { padding: clamp(24px, 3vw, 38px); scroll-margin-top: 24px; }
+.membership-offer h2, .homepage-auction h2, .membership-checkout h2 { font: 400 clamp(32px, 4vw, 42px)/1.05 'Instrument Serif', Georgia, serif; margin: 0; }
+.membership-price { font: 400 100px/1 'Instrument Serif', Georgia, serif; margin: 24px 0 4px; letter-spacing: -.04em; }
+.membership-price span { font: 500 28px Inter, sans-serif; letter-spacing: -.03em; }
+.membership-caption { font-size: 15px; font-weight: 600; margin: 0; }
+.membership-description { color: var(--muted); font-size: 14px; margin: 20px 0; }
+.membership-buy { width: 100%; justify-content: center; padding: 14px 18px; }
+.membership-note { font-size: 12px; color: var(--muted); text-align: center; margin: 12px 0 0; }
+.homepage-auction { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; padding: 32px; margin-bottom: 64px; }
+.homepage-auction p:not(.eyebrow) { color: var(--muted); max-width: 480px; margin: 12px 0 0; }
+.homepage-auction h2 { font-size: 36px; }
+.auction-status { border-left: 1px solid var(--line); padding-left: 32px; font-size: 14px; }
+.auction-label { font-size: 12px; font-weight: 600; background: var(--chip); padding: 6px 12px; display: inline-block; border-radius: 99px; }
+.auction-status a { color: var(--text); display: inline-block; margin-top: 14px; text-underline-offset: 4px; }
+.people-heading { margin-bottom: 28px; }
+.people-heading .section-title { font-size: clamp(32px, 4vw, 44px); margin-bottom: 8px; }
+.people-heading p { color: var(--muted); margin: 0; }
+.founder-note { max-width: 720px; margin: 0 auto 40px; padding: 20px 24px; }
+.founder-note summary { cursor: pointer; font-weight: 500; }
+.founder-note p { color: var(--muted); margin-bottom: 0; }
+.membership-checkout { background: var(--bg); color: var(--text); width: min(540px, calc(100% - 32px)); max-height: calc(100dvh - 48px); overflow: auto; border: 1px solid var(--line); border-radius: 24px; padding: 36px; }
+.membership-checkout::backdrop { background: rgba(15, 13, 18, .65); backdrop-filter: blur(5px); }
+.membership-checkout p { color: var(--muted); }
+.membership-checkout .checkout-total { color: var(--text); font-size: 28px; font-weight: 600; }
+.checkout-total span { font-size: 13px; font-weight: 400; color: var(--muted); }
+.checkout-close { position: absolute; right: 12px; top: 10px; border: 0; background: transparent; color: var(--text); font-size: 28px; width: 40px; height: 40px; cursor: pointer; }
+.payment-details { background: var(--chip); border-radius: 12px; padding: 16px; font-size: 12px; }
+.payment-details dt { font-weight: 600; margin-top: 10px; }
+.payment-details dt:first-child { margin-top: 0; }
+.payment-details dd { overflow-wrap: anywhere; margin: 4px 0 0; font-family: monospace; }
+.payment-link-label { display: block; font-size: 12px; margin-top: 20px; }
+#payment-link { width: 100%; padding: 10px; margin-top: 4px; border: 1px solid var(--line); background: var(--surface); color: var(--text); border-radius: 6px; }
+#payment-status { font-size: 13px; }
+.receipt-note { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 20px; font-size: 14px; }
+.receipt-note a { color: var(--text); text-underline-offset: 3px; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 760px) {
+  .membership-hero { grid-template-columns: 1fr; padding-top: 28px; }
+  .membership-offer { max-width: 520px; width: 100%; }
+  .homepage-auction { grid-template-columns: 1fr; gap: 24px; padding: 24px; margin-bottom: 48px; }
+  .auction-status { border-left: 0; border-top: 1px solid var(--line); padding: 24px 0 0; }
+  .membership-checkout { padding: 32px 24px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
