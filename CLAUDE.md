@@ -32,6 +32,7 @@ Optional fields:
 - `"no_embed": true`: the author turned embedding off (embed page says "link may be broken" but the post opens fine; username is on the post page itself); same panel without the 18+ label
 - `"bio"`: enables a personal page and a "Read more →" link (blank line = new paragraph; URLs auto-link)
 - `"note": "Explore the comments section"`: highlighted line above the embed, links to the post. Add only when the owner explicitly asks; don't suggest it. Profiles with a note form the "Explore the comments" category (filter above the grid, share link `/#comments`).
+- `"more_posts": ["https://www.instagram.com/reel/CODE/"]`: extra posts from someone already listed (a "regular"). Their tile gets Post 1 / Post 2 buttons that swap the embed in place, and they appear in the "Regulars" category (`/#regulars`). When the owner sends a new post from someone already on the site, append it here instead of making a second tile.
 - `"name"`, `"posted"` (override the date)
 
 Notes:

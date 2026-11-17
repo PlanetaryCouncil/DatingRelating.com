@@ -101,6 +101,12 @@
       font-weight: 600; font-size: 14px; text-decoration: none;
     }
     .filters a[aria-current] { background: var(--accent); color: #fff; }
+    .ecard .posts { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+    .ecard .posts button {
+      padding: 6px 12px; border: 0; border-radius: 999px; background: var(--chip); color: var(--text);
+      font: inherit; font-weight: 600; font-size: 13px; cursor: pointer;
+    }
+    .ecard .posts button[aria-pressed] { background: var(--accent); color: #fff; }
     .ecard .fallback {
       display: block; padding: 28px; border-radius: 16px; background: var(--chip);
       color: var(--accent); font-weight: 600; text-decoration: none; text-align: center;
@@ -258,7 +264,24 @@
       c.append(head);
       if (p.note) c.append(el("a", { class: "note", href: p.post_url, target: "_blank", rel: "noopener" }, `${p.note} →`));
 
-      c.append(embedFrame(p.post_url, { restricted: p.age_restricted, noEmbed: p.no_embed, eager: i < 6 }));
+      const frame = embedFrame(p.post_url, { restricted: p.age_restricted, noEmbed: p.no_embed, eager: i < 6 });
+      // Regulars: extra posts from the same person, switched in place with numbered buttons.
+      if (p.more_posts?.length) {
+        const posts = [p.post_url, ...p.more_posts];
+        const tabs = el("div", { class: "posts", role: "group", "aria-label": "Posts" });
+        posts.forEach((url, k) => {
+          const b = el("button", { type: "button" }, `Post ${k + 1}`);
+          if (k === 0) b.setAttribute("aria-pressed", "true");
+          b.addEventListener("click", () => {
+            tabs.querySelectorAll("button").forEach((x) => x.removeAttribute("aria-pressed"));
+            b.setAttribute("aria-pressed", "true");
+            c.querySelector(".frame").replaceWith(k === 0 ? frame : embedFrame(url, { eager: true }));
+          });
+          tabs.append(b);
+        });
+        c.append(tabs);
+      }
+      c.append(frame);
       const more = personUrl(p);
       if (more) c.append(el("a", { class: "more", href: more }, "Read more →"));
       return c;
@@ -321,24 +344,33 @@
         // (visitor seed + profile id). New profiles slot in without reshuffling everyone else.
         // A shared link (#id) puts that person first; "pinned" profiles come next.
         const rank = (p) => hash(`${visitorSeed()}:${p.id}`);
-        // #comments is a category: only posts whose comment sections are worth reading ("note").
-        const COMMENTS = "comments";
+        // Categories, each with its own share link: #comments (comment sections worth reading,
+        // "note") and #regulars (people who post more than once, "more_posts").
+        const CATEGORIES = [
+          { hash: "comments", label: "Explore the comments", test: (p) => p.note },
+          { hash: "regulars", label: "Regulars", test: (p) => p.more_posts?.length },
+        ];
         const order = (list) => {
           const target = decodeURIComponent(location.hash.slice(1));
-          if (target === COMMENTS) return list.filter((p) => p.note && !p.hidden).sort((a, b) => rank(a) - rank(b));
+          const cat = CATEGORIES.find((k) => k.hash === target);
+          if (cat) return list.filter((p) => cat.test(p) && !p.hidden).sort((a, b) => rank(a) - rank(b));
           const tier = (p) => (p.id === target ? 0 : p.pinned ? 1 : 2);
           // "hidden" profiles stay out of the list, but a direct #link still shows them.
           return list.filter((p) => !p.hidden || p.id === target)
             .sort((a, b) => tier(a) - tier(b) || rank(a) - rank(b));
         };
-        const commentCount = data.filter((p) => p.note && !p.hidden).length;
         const filters = () => {
-          const onComments = location.hash === `#${COMMENTS}`;
           const all = el("a", { href: "#" }, "Everyone");
-          const com = el("a", { href: `#${COMMENTS}` }, `Explore the comments (${commentCount})`);
-          (onComments ? com : all).setAttribute("aria-current", "true");
-          $("filters").replaceChildren(all, com);
-          $("filters").hidden = commentCount === 0;
+          let current = all;
+          const links = CATEGORIES.map((k) => {
+            const n = data.filter((p) => k.test(p) && !p.hidden).length;
+            const a = n && el("a", { href: `#${k.hash}` }, `${k.label} (${n})`);
+            if (a && location.hash === `#${k.hash}`) current = a;
+            return a;
+          }).filter(Boolean);
+          current.setAttribute("aria-current", "true");
+          $("filters").replaceChildren(all, ...links);
+          $("filters").hidden = links.length === 0;
         };
         filters();
         render(order(data));
