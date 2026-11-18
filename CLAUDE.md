@@ -27,6 +27,7 @@ The owner sends a post link (Instagram, Threads or X) and usually a location. Ad
 Optional fields:
 - `"hidden": true`: not in the public list; reachable only via `/#id`, shown first with an orange "Not publicly visible / Waiting for approval" notice
 - `"pinned": true`: always first (the owner, `marsitatheultra`)
+- `"featured": true`: near the top, right after pinned (when the owner says "near the top")
 - `"relocation": true` shows "Relocation friendly"; `"passports": 3` shows "3× passport"
 - `"age_restricted": true`: Instagram won't embed these; tile shows an 18+ "Open on Instagram" panel
 - `"no_embed": true`: the author turned embedding off (embed page says "link may be broken" but the post opens fine; username is on the post page itself); same panel without the 18+ label
@@ -42,7 +43,7 @@ Notes:
 - Location order on tiles is broad to narrow: "United States, Utah, Salt Lake City"; empty = "Location unspecified".
 
 ## Homepage behaviour
-- Order: `/#id` target first, then pinned, then a per-visitor stable random order (seed in localStorage).
+- Order: `/#id` target first, then pinned, then featured, then a per-visitor stable random order (seed in localStorage).
 - Embeds are iframes (no embed.js/widgets.js). First 6 load immediately, the rest ~3 screens ahead; heights come from postMessage.
 - Each tile has a link icon (top right) that copies the `/#id` share link.
 

@@ -480,5 +480,13 @@
     "region": "",
     "country": "United Kingdom",
     "added": "2026-11-18"
+  },
+  {
+    "id": "ann-glamnetic",
+    "name": "Ann",
+    "x": "lucy_guo",
+    "post_url": "https://x.com/lucy_guo/status/2123147753404641682",
+    "featured": true,
+    "added": "2026-11-18"
   }
 ]

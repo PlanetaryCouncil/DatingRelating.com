@@ -342,7 +342,7 @@
       .then((data) => {
         // Random order per visitor, but stable across reloads: each profile's rank is a hash of
         // (visitor seed + profile id). New profiles slot in without reshuffling everyone else.
-        // A shared link (#id) puts that person first; "pinned" profiles come next.
+        // A shared link (#id) puts that person first; "pinned" profiles come next, then "featured".
         const rank = (p) => hash(`${visitorSeed()}:${p.id}`);
         // Categories, each with its own share link: #comments (comment sections worth reading,
         // "note") and #regulars (people who post more than once, "more_posts").
@@ -354,7 +354,7 @@
           const target = decodeURIComponent(location.hash.slice(1));
           const cat = CATEGORIES.find((k) => k.hash === target);
           if (cat) return list.filter((p) => cat.test(p) && !p.hidden).sort((a, b) => rank(a) - rank(b));
-          const tier = (p) => (p.id === target ? 0 : p.pinned ? 1 : 2);
+          const tier = (p) => (p.id === target ? 0 : p.pinned ? 1 : p.featured ? 2 : 3);
           // "hidden" profiles stay out of the list, but a direct #link still shows them.
           return list.filter((p) => !p.hidden || p.id === target)
             .sort((a, b) => tier(a) - tier(b) || rank(a) - rank(b));
