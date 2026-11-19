@@ -92,6 +92,7 @@ def page(p):
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
+  <script src="/theme.js"></script>
   <style>
     .person {{ display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 48px; align-items: start; padding: 40px 0 0; }}
     @media (max-width: 860px) {{ .person {{ grid-template-columns: 1fr; gap: 28px; }} }}

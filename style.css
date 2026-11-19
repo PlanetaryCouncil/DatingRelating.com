@@ -1,28 +1,47 @@
 :root {
-  --bg: #fbf8f6;
-  --surface: rgba(255, 255, 255, 0.72);
-  --text: #17141a;
-  --muted: #6d6773;
-  --line: rgba(23, 20, 26, 0.08);
-  --accent: #ff4f6d;
-  --accent-2: #ff9a5a;
-  --chip: #f1ecef;
-  --blob-1: #ffd5df;
-  --blob-2: #ffe6cf;
-  --blob-3: #e5dcff;
+  --bg: #fff8f1;
+  --surface: rgba(255, 255, 255, 0.78);
+  --text: #1a1026;
+  --muted: #6a5f78;
+  --line: rgba(26, 16, 38, 0.09);
+  --accent: #ff2e7e;
+  --accent-2: #ff9f1c;
+  --chip: #fdeaf2;
+  --blob-1: #ff9ec7;
+  --blob-2: #ffd166;
+  --blob-3: #8fd8ff;
+  color-scheme: light;
 }
+/* Night mode: follows the device unless the visitor picked day or night (theme.js). */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f0d12;
-    --surface: rgba(28, 25, 32, 0.72);
-    --text: #f4f0f6;
-    --muted: #a49cab;
-    --line: rgba(255, 255, 255, 0.08);
-    --chip: #26222b;
-    --blob-1: #4a1a2a;
-    --blob-2: #45281a;
-    --blob-3: #2a2148;
+  :root:not([data-theme="light"]) {
+    --bg: #120a24;
+    --surface: rgba(32, 20, 56, 0.72);
+    --text: #fbf3ff;
+    --muted: #b9a8cf;
+    --line: rgba(255, 255, 255, 0.1);
+    --accent: #ff4f9a;
+    --accent-2: #ffc93c;
+    --chip: #2c1d4a;
+    --blob-1: #7a1f63;
+    --blob-2: #6b3a12;
+    --blob-3: #18487d;
+    color-scheme: dark;
   }
+}
+:root[data-theme="dark"] {
+  --bg: #120a24;
+  --surface: rgba(32, 20, 56, 0.72);
+  --text: #fbf3ff;
+  --muted: #b9a8cf;
+  --line: rgba(255, 255, 255, 0.1);
+  --accent: #ff4f9a;
+  --accent-2: #ffc93c;
+  --chip: #2c1d4a;
+  --blob-1: #7a1f63;
+  --blob-2: #6b3a12;
+  --blob-3: #18487d;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body {
@@ -78,6 +97,12 @@ h1 em {
 .lede { max-width: 520px; color: var(--muted); font-size: 18px; margin: 24px 0 0; }
 
 /* Site nav */
+.theme-toggle {
+  margin-left: auto; margin-right: 8px; padding: 8px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  font: 600 13px/1 Inter, system-ui, sans-serif;
+}
+.theme-toggle:hover { background: var(--chip); }
 .navlinks { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
 .navlinks a:not(.btn) {
   color: var(--text); text-decoration: none; font-size: 14px; font-weight: 500;
@@ -139,8 +164,7 @@ h1 em {
 .frame.restricted .r-sub { color: var(--accent); font-weight: 600; font-size: 14px; }
 .frame.threads iframe { height: 380px; }
 
-/* Breakpoint lifetime membership */
-/* Introduce the purpose and useful resources before the membership offer. */
+/* Homepage: purpose, values, founding members */
 .connection-hero { padding: 44px 0 32px; max-width: 880px; }
 .connection-hero .eyebrow { color: var(--muted); }
 .connection-hero h1 { font-size: clamp(46px, 7.4vw, 88px); }
@@ -156,25 +180,9 @@ h1 em {
 .connection-values h2 { font: 400 27px/1.1 'Instrument Serif', Georgia, serif; margin: 0; }
 .connection-values p { font-size: 13px; color: var(--muted); margin: 8px 0 0; line-height: 1.5; }
 .connection-values a > span:last-child { margin-left: auto; font-size: 16px; }
-.membership-section { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; padding: 48px 0 56px; }
-.membership-reason h2 { font: 400 clamp(34px, 4vw, 46px)/1.05 'Instrument Serif', Georgia, serif; margin: 0 0 18px; }
-.membership-reason > p:not(.eyebrow) { color: var(--muted); max-width: 460px; font-size: 15px; margin: 12px 0 0; }
 button.btn { font-family: inherit; border: 0; cursor: pointer; }
 button.btn.ghost { border: 1px solid var(--line); }
-.membership-offer { padding: 28px; scroll-margin-top: 16px; }
-.offer-exclusive { display: inline-flex; align-items: center; gap: 7px; color: #873044; background: #ffe4e9; padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; margin: 0 0 22px; }
-.offer-price-row { display: flex; align-items: center; gap: 12px; justify-content: space-between; }
-.membership-offer h2, .homepage-auction h2, .membership-checkout h2 { font: 400 36px/1.05 'Instrument Serif', Georgia, serif; margin: 0; }
-.membership-price { flex: none; font: 400 68px/.95 'Instrument Serif', Georgia, serif; margin: 0; letter-spacing: -.04em; text-align: center; }
-.membership-price span { display: block; font: 600 13px/1.5 Inter, sans-serif; letter-spacing: .05em; }
-.membership-caption { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
-.founder-badge { display: flex; gap: 10px; align-items: center; padding: 14px; border: 1px solid #b7c9be; background: #eff7f1; color: #244f38; border-radius: 12px; margin-top: 22px; }
-.badge-mark { border: 1px solid currentColor; border-radius: 50%; width: 30px; height: 30px; display: grid; place-items: center; flex: none; }
-.founder-badge strong { display: block; font-size: 13px; }
-.founder-badge span:not(.badge-mark) { display: block; font-size: 12px; opacity: .8; margin-top: 1px; }
-.membership-description { color: var(--muted); font-size: 14px; margin: 16px 0 20px; }
-.membership-buy { width: 100%; justify-content: center; min-height: 52px; padding: 14px; text-align: center; line-height: 1.4; }
-.membership-note { font-size: 11px; color: var(--muted); text-align: center; margin: 10px 0 0; }
+.homepage-auction h2 { font: 400 36px/1.05 'Instrument Serif', Georgia, serif; margin: 0; }
 .homepage-auction { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; padding: 28px; margin-bottom: 48px; }
 .homepage-auction p:not(.eyebrow) { color: var(--muted); max-width: 480px; margin: 12px 0 0; }
 .homepage-auction h2 { font-size: 32px; }
@@ -187,39 +195,6 @@ button.btn.ghost { border: 1px solid var(--line); }
 .founder-note { max-width: 720px; margin: 0 auto 40px; padding: 20px 24px; }
 .founder-note summary { cursor: pointer; font-weight: 500; }
 .founder-note p { color: var(--muted); margin-bottom: 0; }
-.checkout-open { overflow: hidden; }
-.membership-checkout { background: var(--bg); color: var(--text); width: min(480px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--line); border-radius: 24px; padding: 0 24px 24px; }
-.membership-checkout::backdrop { background: rgba(15, 13, 18, .65); backdrop-filter: blur(5px); }
-.checkout-heading { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 8px; justify-content: space-between; background: var(--bg); padding: 22px 0 12px; }
-.checkout-heading .eyebrow { font-size: 10px; margin-bottom: 7px; }
-.membership-checkout h2 { font-size: 30px; }
-.checkout-close { flex: none; border: 1px solid var(--line); border-radius: 50%; background: var(--chip); color: var(--text); font-size: 24px; width: 44px; height: 44px; cursor: pointer; }
-.membership-checkout p { color: var(--muted); }
-.payment-context { font-size: 13px; margin: 0 0 16px; line-height: 1.65; }
-.payment-context strong { font-weight: 500; color: var(--text); }
-.wallet-primary { width: 100%; justify-content: center; min-height: 52px; font-size: 15px; }
-.wallet-help { font-size: 12px; line-height: 1.5; margin: 10px 0 18px; }
-.address-block { background: var(--chip); padding: 12px; border-radius: 12px; }
-.address-block label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 6px; }
-.address-copy-row { display: flex; flex-direction: column; gap: 8px; }
-#payment-recipient { resize: none; display: block; width: 100%; min-height: 42px; border: 0; background: transparent; color: var(--text); font: 13px/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; padding: 0; }
-#address-copy { justify-content: center; min-height: 44px; background: var(--surface); border-color: var(--line); border-radius: 8px; }
-.payment-status { font-size: 12px; margin: 6px 0; min-height: 18px; }
-.payment-qr { margin: 6px 0 18px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-#payment-qr { width: 192px; height: 192px; background: #fff; border-radius: 10px; overflow: hidden; }
-#payment-qr svg { display: block; width: 100%; height: 100%; }
-.payment-qr figcaption { font-size: 12px; color: var(--muted); margin-top: 8px; }
-.receipt-note { border-top: 1px solid var(--line); padding-top: 16px; font-size: 13px; }
-.receipt-note p { margin: 6px 0; }
-.receipt-note a { color: var(--text); display: inline-block; padding: 8px 0; text-underline-offset: 3px; }
-.payment-more { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 12px; font-size: 12px; }
-.payment-more summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 8px; }
-.payment-more summary::before { content: '+'; font-size: 20px; }
-.payment-more[open] summary::before { content: '−'; }
-.order-note { overflow-wrap: anywhere; }
-.payment-link-label { display: block; margin-top: 12px; }
-#payment-link { width: 100%; min-height: 44px; padding: 10px; margin: 4px 0 8px; border: 1px solid var(--line); background: var(--surface); color: var(--text); border-radius: 6px; font-size: 16px; }
-#payment-copy { min-height: 44px; }
 [hidden] { display: none !important; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 @media (max-width: 760px) {
@@ -236,35 +211,32 @@ button.btn.ghost { border: 1px solid var(--line); }
   .connection-values a + a { border-top: 1px solid var(--line); }
   .connection-values h2 { font-size: 25px; }
   .connection-values p { margin-top: 4px; }
-  .membership-section { grid-template-columns: 1fr; gap: 22px; padding: 32px 0; }
-  .membership-reason .eyebrow { font-size: 10px; margin-bottom: 10px; }
-  .membership-reason h2 { font-size: 34px; margin-bottom: 12px; }
-  .membership-reason > p:not(.eyebrow) { font-size: 14px; }
-  .membership-offer { padding: 20px; width: 100%; border-radius: 20px; }
-  .offer-exclusive { margin-bottom: 16px; font-size: 11px; }
-  .membership-offer h2 { font-size: 32px; }
-  .membership-price { font-size: 60px; }
-  .founder-badge { margin-top: 16px; padding: 12px; }
-  .membership-description { font-size: 13px; margin: 12px 0 16px; }
   .homepage-auction { grid-template-columns: 1fr; gap: 20px; padding: 22px; margin-bottom: 32px; }
   .auction-status { border-left: 0; border-top: 1px solid var(--line); padding: 20px 0 0; }
 }
 @media (max-width: 560px) {
   .dating-home .navlinks { padding-bottom: 3px; }
   .dating-home .navlinks a:not(.btn) { font-size: 12px; min-height: 44px; display: inline-flex; align-items: center; }
-  .membership-checkout { width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; margin: 0; border: 0; border-radius: 0; padding: 0 20px max(24px, env(safe-area-inset-bottom)); }
-  .checkout-heading { padding-top: max(16px, env(safe-area-inset-top)); }
-}
-@media (max-width: 350px) {
-  .membership-offer { padding: 16px; }
-  .membership-offer h2 { font-size: 29px; }
-  .membership-caption { font-size: 12px; }
-  .membership-buy { font-size: 12px; }
-  .membership-checkout { padding-left: 16px; padding-right: 16px; }
-  .membership-checkout h2 { font-size: 27px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
 
-/* Keep the original design; only the membership buy button is green. */
-.membership-buy { background: #17623e; color: #fff; }
-.membership-buy:hover { background: #104b2e; }
+
+/* Founding members */
+.founding { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; padding: 56px 0; scroll-margin-top: 16px; }
+.founding h2 { font: 400 clamp(36px, 5vw, 56px)/1.02 'Instrument Serif', Georgia, serif; margin: 0 0 16px; }
+.founding h2 em { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.founding-intro > p:not(.eyebrow) { color: var(--muted); max-width: 480px; margin: 0; }
+.founding-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.founding-steps li {
+  display: flex; gap: 12px; padding: 18px; border-radius: 20px; border: 1px solid var(--line);
+  background: var(--surface); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
+.founding-steps li > span { color: var(--accent); font-weight: 600; font-size: 12px; padding-top: 4px; }
+.founding-steps h3 { margin: 0 0 4px; font-size: 17px; }
+.founding-steps p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+@media (max-width: 760px) {
+  .founding { grid-template-columns: 1fr; padding: 36px 0; }
+}
+@media (max-width: 420px) {
+  .founding-steps { grid-template-columns: 1fr; }
+}

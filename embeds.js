@@ -44,7 +44,8 @@ const personUrl = (p) => (p.bio ? `/people/${slugOf(p)}/` : null);
 
 // Embeds are plain iframes with loading="lazy": nothing from Instagram or X loads until a
 // card is about to scroll into view, and no embed.js / widgets.js scripts are needed at all.
-const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+// Follows the day/night toggle (theme.js) when present, else the device setting.
+const dark = window.isDarkTheme ? window.isDarkTheme() : matchMedia("(prefers-color-scheme: dark)").matches;
 const PLATFORM = { ig: "Instagram", threads: "Threads", x: "X" };
 function frameSrc(s) {
   if (s.kind === "ig") return `https://www.instagram.com/p/${s.code}/embed/captioned/`;
