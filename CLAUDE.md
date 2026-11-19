@@ -9,8 +9,8 @@ Static site on GitHub Pages (custom domain via `CNAME`). No framework, no bundle
 - `/frameworks/` credited frameworks (Dating Tech Spec by Olesya Kovalskaya; Boyfriend Application by @bren_tru; slides in `media/frameworks/<name>/NN.webp`, 1080px wide, each section credits the creator and links the original post)
 - Homepage has a "Welcome, founding members" section (`#founding`: coaching, preparation, profile review, app automation). The Solana Breakpoint 1 SOL offer is over and was removed.
 - `/hacker-mindset/`, `/co-founder-co-lover/`, `/about/` (design choices + the ULTRA reflection + "The meta edge" `#meta-edge`: Tinder web automation, Bumble/Hinge phones over USB)
-- Shared: `style.css` (tokens, nav, panels, embed frames; bright day palette + night palette), `embeds.js` (embeds, dates, preloading), `theme.js` (Day/Night toggle next to the logo, saved per visitor, defaults to the device setting; load it in `<head>` of every page and the `build.py` template)
-- Every page has the same nav: Dating · Relating · Frameworks · Hacker Mindset · Co-founder & Co-lover · About. A new page needs the link added to all pages **and** to the template in `build.py`.
+- Shared: `style.css` (tokens, nav, panels, embed frames; bright day palette + night palette), `embeds.js` (embeds, dates, preloading), `theme.js` (Day/Night toggle next to the logo, saved per visitor, defaults to the device setting; also prefetches/prerenders internal pages so switching is instant; load it in `<head>` of every page and the `build.py` template)
+- Every page has the same nav: Dating · Relating · Frameworks · Co-founder & Co-lover · About (Hacker Mindset was dropped from the nav; its page still exists). A new page needs the link added to all pages **and** to the template in `build.py`.
 
 ## Adding a profile (the most common task)
 The owner sends a post link (Instagram, Threads or X) and usually a location. Add an entry to `profiles.json`:

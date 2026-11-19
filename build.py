@@ -118,7 +118,6 @@ def page(p):
         <a href="/" aria-current="page">Dating</a>
         <a href="/relating/">Relating</a>
         <a href="/frameworks/">Frameworks</a>
-        <a href="/hacker-mindset/">Hacker Mindset</a>
         <a href="/co-founder-co-lover/">Co-founder &amp; Co-lover</a>
         <a href="/about/">About</a>
       </div>
